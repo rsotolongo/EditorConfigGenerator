@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EditorConfigGenerator</name>
+    </assembly>
+    <members>
+        <member name="T:EditorConfig.Constants">
+            <summary>
+            Internal constants.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.AssembliesPattern">
+            <summary>
+            The assemblies pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.AssembliesPath">
+            <summary>
+            The assemblies path.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.AssemblyRulesHeaderPattern">
+            <summary>
+            The assembly rules header pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.ErrorLevel">
+            <summary>
+            The error level.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.NoneLevel">
+            <summary>
+            The none level.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.OtherLanguagePattern">
+            <summary>
+            The other language pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.OutputFilename">
+            <summary>
+            The output filename.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.PackageNameAttribute">
+            <summary>
+            The package name attribute.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.PackageNodeName">
+            <summary>
+            The package node name.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.PackageVersionAttribute">
+            <summary>
+            The package version attribute.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.PackagesDirectoryName">
+            <summary>
+            The packages directory name.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.PackagesSubdirectoryName">
+            <summary>
+            The packages subdirectory name.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.ProjectExtension">
+            <summary>
+            The project extension.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.RelativeNonWindowsPath">
+            <summary>
+            The relative path for non Windows OS.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.RelativeWindowsPath">
+            <summary>
+            The relative path for Windows OS.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.ResourcesPattern">
+            <summary>
+            The resources pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.RuleHeaderPattern">
+            <summary>
+            The rule header pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.RuleSeverityPattern">
+            <summary>
+            The rule severity pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.SupportedDiagnosticsPropertyName">
+            <summary>
+            The supported diagnostics property name.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.WarningLevel">
+            <summary>
+            The warning level.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.NoneIds">
+            <summary>
+            The identifiers to be ìgnored.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.WarningIds">
+            <summary>
+            The identifiers to be warned.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.OutputFileHeader">
+            <summary>
+            The output file header.
+            </summary>
+        </member>
+        <member name="T:EditorConfig.Helpers">
+            <summary>
+            Global routines.
+            </summary>
+        </member>
+        <member name="M:EditorConfig.Helpers.CreateType(System.Type)">
+            <summary>
+            Creates the type.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>A type.</returns>
+        </member>
+        <member name="M:EditorConfig.Helpers.GetAssemblyRuleSeverities(System.Reflection.Assembly)">
+            <summary>
+            Gets the assembly rule severities.
+            </summary>
+            <param name="assembly">The assembly.</param>
+            <returns>A list of rules.</returns>
+        </member>
+        <member name="M:EditorConfig.Helpers.GetFiles">
+            <summary>
+            Gets the files.
+            </summary>
+            <returns>A list of files.</returns>
+        </member>
+        <member name="M:EditorConfig.Helpers.IsSimple(System.Type)">
+            <summary>
+            Determines whether the specified type is simple.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>
+              <c>true</c> if the specified type is simple; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:EditorConfig.Helpers.CreateParameterInstances(System.Reflection.ParameterInfo[])">
+            <summary>
+            Creates the parameter instances.
+            </summary>
+            <param name="constructorParameters">The constructor parameters.</param>
+            <returns>A list of parameter instances.</returns>
+        </member>
+        <member name="M:EditorConfig.Helpers.CreateTypeRule(System.Collections.Generic.List{EditorConfig.Rule},Microsoft.CodeAnalysis.DiagnosticDescriptor)">
+            <summary>
+            Creates the type rule.
+            </summary>
+            <param name="result">The result.</param>
+            <param name="supportedDiagnostic">The supported diagnostic.</param>
+        </member>
+        <member name="M:EditorConfig.Helpers.FindTypeRules(System.Type,System.Reflection.PropertyInfo)">
+            <summary>
+            Finds the type rules.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="supportedDiagnosticsProperty">The supported diagnostics property.</param>
+        </member>
+        <member name="M:EditorConfig.Helpers.GetFiles(System.String[])">
+            <summary>
+            Gets the files.
+            </summary>
+            <param name="assemblyFiles">The assembly files.</param>
+        </member>
+        <member name="T:EditorConfig.Parser">
+            <summary>
+            Parser implementation.
+            </summary>
+        </member>
+        <member name="M:EditorConfig.Parser.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:EditorConfig.Parser"/> class.
+            </summary>
+        </member>
+        <member name="M:EditorConfig.Parser.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:EditorConfig.Parser"/> class.
+            </summary>
+            <param name="assemblyPaths">The assembly paths.</param>
+        </member>
+        <member name="M:EditorConfig.Parser.GetAssembliesRuleSevereties(System.String[],System.String[],System.Boolean,System.Boolean)">
+            <summary>
+            Gets the assemblies rule severeties.
+            </summary>
+            <param name="noneIds">The rules identifiers to ignore.</param>
+            <param name="warningIds">The rules identifiers to warn about.</param>
+            <param name="addHeader">if set to <c>true</c> [add header].</param>
+            <param name="addSeparator">if set to <c>true</c> [add separator].</param>
+            <returns>A list of rule severeties.</returns>
+        </member>
+        <member name="M:EditorConfig.Parser.AddAssembly(System.Collections.Generic.ICollection{System.Reflection.Assembly},System.String,System.String,System.Reflection.Assembly)">
+            <summary>
+            Adds the assembly.
+            </summary>
+            <param name="assembliesList">The assemblies list.</param>
+            <param name="assemblyPath">The assembly path.</param>
+            <param name="name">The name.</param>
+            <param name="referenceAssembly">The reference assembly.</param>
+        </member>
+        <member name="M:EditorConfig.Parser.AddRuleSeverety(System.String[],System.String[],System.Boolean,System.Boolean,System.Collections.Generic.ICollection{System.String},EditorConfig.Rule)">
+            <summary>
+            Adds the rule severety.
+            </summary>
+            <param name="noneIds">The none ids.</param>
+            <param name="warningIds">The warning ids.</param>
+            <param name="addHeader">if set to <c>true</c> [add header].</param>
+            <param name="addSeparator">if set to <c>true</c> [add separator].</param>
+            <param name="ruleSevereties">The rule severeties.</param>
+            <param name="rule">The rule.</param>
+        </member>
+        <member name="T:EditorConfig.Program">
+            <summary>
+            Entry point implementation.
+            </summary>
+        </member>
+        <member name="M:EditorConfig.Program.Main">
+            <summary>
+            Defines the entry point of the application.
+            </summary>
+        </member>
+        <member name="T:EditorConfig.Rule">
+            <summary>
+            Rule entity.
+            </summary>
+        </member>
+        <member name="P:EditorConfig.Rule.Id">
+            <summary>
+            Gets the identifier.
+            </summary>
+            <value>
+            The identifier.
+            </value>
+        </member>
+        <member name="P:EditorConfig.Rule.Title">
+            <summary>
+            Gets the title.
+            </summary>
+            <value>
+            The title.
+            </value>
+        </member>
+    </members>
+</doc>
