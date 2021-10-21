@@ -96,12 +96,12 @@ namespace EditorConfig
             string projectPath = Directory.GetFiles(projectDirectory).FirstOrDefault(item => item.EndsWith(Constants.ProjectExtension, StringComparison.InvariantCulture));
             if (File.Exists(projectPath))
             {
-                XElement purchaseOrder = XElement.Load(projectPath);
-                if (purchaseOrder != null)
+                XElement projectReference = XElement.Load(projectPath);
+                if (projectReference != null)
                 {
                     string userProfileFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                     string packagesFolder = Path.Combine(userProfileFolder, Constants.PackagesDirectoryName, Constants.PackagesSubdirectoryName);
-                    IEnumerable<XElement> packageReferences = purchaseOrder.Descendants(Constants.PackageNodeName);
+                    IEnumerable<XElement> packageReferences = projectReference.Descendants(Constants.PackageNodeName);
                     foreach (XElement package in packageReferences)
                     {
                         XAttribute packageNameAttribute = package.Attributes().FirstOrDefault(item => item.Name == Constants.PackageNameAttribute);
