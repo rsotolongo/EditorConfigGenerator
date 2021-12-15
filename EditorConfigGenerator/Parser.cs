@@ -22,7 +22,7 @@ namespace EditorConfig
         /// <summary>
         /// Initializes a new instance of the <see cref="Parser"/> class.
         /// </summary>
-        public Parser()
+        internal Parser()
             : this(Helpers.GetFiles())
         {
         }
@@ -31,21 +31,19 @@ namespace EditorConfig
         /// Initializes a new instance of the <see cref="Parser"/> class.
         /// </summary>
         /// <param name="assemblyPaths">The assembly paths.</param>
-        public Parser(string[] assemblyPaths)
+        internal Parser(string[] assemblyPaths)
         {
             var assembliesList = new List<Assembly>();
             if (assemblyPaths != null)
             {
-                foreach (string assemblyPath in assemblyPaths)
+                IEnumerable<string> paths = assemblyPaths.Where(assemblyPath => File.Exists(assemblyPath));
+                foreach (string path in paths)
                 {
-                    if (File.Exists(assemblyPath))
-                    {
-                        AssemblyName assemblyName = AssemblyName.GetAssemblyName(assemblyPath);
-                        string fullName = assemblyName?.FullName;
-                        string name = assemblyName?.Name;
-                        Assembly referenceAssembly = assembliesList.FirstOrDefault(item => item.FullName == fullName);
-                        AddAssembly(assembliesList, assemblyPath, name, referenceAssembly);
-                    }
+                    AssemblyName assemblyName = AssemblyName.GetAssemblyName(path);
+                    string fullName = assemblyName?.FullName;
+                    string name = assemblyName?.Name;
+                    Assembly referenceAssembly = assembliesList.FirstOrDefault(item => item.FullName == fullName);
+                    AddAssembly(assembliesList, path, name, referenceAssembly);
                 }
             }
 
@@ -60,7 +58,7 @@ namespace EditorConfig
         /// <param name="addHeader">if set to <c>true</c> [add header].</param>
         /// <param name="addSeparator">if set to <c>true</c> [add separator].</param>
         /// <returns>A list of rule severeties.</returns>
-        public IList<string> GetAssembliesRuleSevereties(string[] noneIds, string[] warningIds, bool addHeader = true, bool addSeparator = true)
+        internal IList<string> GetAssembliesRuleSevereties(string[] noneIds, string[] warningIds, bool addHeader = true, bool addSeparator = true)
         {
             var result = new List<string>();
             foreach (Assembly assembly in assemblies)

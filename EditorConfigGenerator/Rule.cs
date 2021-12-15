@@ -16,7 +16,7 @@ namespace EditorConfig
         /// <value>
         /// The identifier.
         /// </value>
-        public string Id { get; init; }
+        internal string Id { get; init; }
 
         /// <summary>
         /// Gets the title.
@@ -24,6 +24,6 @@ namespace EditorConfig
         /// <value>
         /// The title.
         /// </value>
-        public string Title { get; init; }
+        internal string Title { get; init; }
     }
 }

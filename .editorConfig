@@ -11,7 +11,7 @@ indent_style = space
 indent_size = 4
 dotnet_analyzer_diagnostic.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=3.11.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # AD0001: Analyzer Failure
 dotnet_diagnostic.AD0001.severity = error
@@ -661,9 +661,6 @@ dotnet_diagnostic.CS0401.severity = error
 # CS0403:
 dotnet_diagnostic.CS0403.severity = error
 
-# CS0404:
-dotnet_diagnostic.CS0404.severity = error
-
 # CS0405:
 dotnet_diagnostic.CS0405.severity = error
 
@@ -985,9 +982,6 @@ dotnet_diagnostic.CS0564.severity = error
 # CS0567:
 dotnet_diagnostic.CS0567.severity = error
 
-# CS0568:
-dotnet_diagnostic.CS0568.severity = error
-
 # CS0569:
 dotnet_diagnostic.CS0569.severity = error
 
@@ -996,9 +990,6 @@ dotnet_diagnostic.CS0571.severity = error
 
 # CS0572:
 dotnet_diagnostic.CS0572.severity = error
-
-# CS0573:
-dotnet_diagnostic.CS0573.severity = error
 
 # CS0574:
 dotnet_diagnostic.CS0574.severity = error
@@ -1227,9 +1218,6 @@ dotnet_diagnostic.CS0694.severity = error
 
 # CS0695:
 dotnet_diagnostic.CS0695.severity = error
-
-# CS0698:
-dotnet_diagnostic.CS0698.severity = error
 
 # CS0699:
 dotnet_diagnostic.CS0699.severity = error
@@ -2959,9 +2947,6 @@ dotnet_diagnostic.CS7064.severity = error
 # CS7065:
 dotnet_diagnostic.CS7065.severity = error
 
-# CS7066:
-dotnet_diagnostic.CS7066.severity = error
-
 # CS7067:
 dotnet_diagnostic.CS7067.severity = error
 
@@ -3531,9 +3516,6 @@ dotnet_diagnostic.CS8203.severity = error
 
 # CS8204:
 dotnet_diagnostic.CS8204.severity = error
-
-# CS8205:
-dotnet_diagnostic.CS8205.severity = error
 
 # CS8206:
 dotnet_diagnostic.CS8206.severity = error
@@ -4384,6 +4366,9 @@ dotnet_diagnostic.CS8824.severity = error
 # CS8825: Return value must be non-null because parameter is non-null.
 dotnet_diagnostic.CS8825.severity = error
 
+# CS8826: Partial method declarations have signature differences.
+dotnet_diagnostic.CS8826.severity = error
+
 # CS8830:
 dotnet_diagnostic.CS8830.severity = error
 
@@ -4603,12 +4588,180 @@ dotnet_diagnostic.CS8916.severity = error
 # CS8917:
 dotnet_diagnostic.CS8917.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=3.11.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# CS8918:
+dotnet_diagnostic.CS8918.severity = error
+
+# CS8919:
+dotnet_diagnostic.CS8919.severity = error
+
+# CS8920:
+dotnet_diagnostic.CS8920.severity = error
+
+# CS8921:
+dotnet_diagnostic.CS8921.severity = error
+
+# CS8922:
+dotnet_diagnostic.CS8922.severity = error
+
+# CS8923:
+dotnet_diagnostic.CS8923.severity = error
+
+# CS8924:
+dotnet_diagnostic.CS8924.severity = error
+
+# CS8925:
+dotnet_diagnostic.CS8925.severity = error
+
+# CS8926:
+dotnet_diagnostic.CS8926.severity = error
+
+# CS8927:
+dotnet_diagnostic.CS8927.severity = error
+
+# CS8928:
+dotnet_diagnostic.CS8928.severity = error
+
+# CS8929:
+dotnet_diagnostic.CS8929.severity = error
+
+# CS8930:
+dotnet_diagnostic.CS8930.severity = error
+
+# CS8931:
+dotnet_diagnostic.CS8931.severity = error
+
+# CS8932:
+dotnet_diagnostic.CS8932.severity = error
+
+# CS8933: The using directive appeared previously as global using
+dotnet_diagnostic.CS8933.severity = error
+
+# CS8934:
+dotnet_diagnostic.CS8934.severity = error
+
+# CS8935:
+dotnet_diagnostic.CS8935.severity = error
+
+# CS8936:
+dotnet_diagnostic.CS8936.severity = error
+
+# CS8937:
+dotnet_diagnostic.CS8937.severity = error
+
+# CS8938:
+dotnet_diagnostic.CS8938.severity = error
+
+# CS8939:
+dotnet_diagnostic.CS8939.severity = error
+
+# CS8940:
+dotnet_diagnostic.CS8940.severity = error
+
+# CS8941:
+dotnet_diagnostic.CS8941.severity = error
+
+# CS8942:
+dotnet_diagnostic.CS8942.severity = error
+
+# CS8943:
+dotnet_diagnostic.CS8943.severity = error
+
+# CS8944:
+dotnet_diagnostic.CS8944.severity = error
+
+# CS8945:
+dotnet_diagnostic.CS8945.severity = error
+
+# CS8946:
+dotnet_diagnostic.CS8946.severity = error
+
+# CS8947: Parameter to interpolated string handler conversion occurs after handler parameter
+dotnet_diagnostic.CS8947.severity = error
+
+# CS8948:
+dotnet_diagnostic.CS8948.severity = error
+
+# CS8949:
+dotnet_diagnostic.CS8949.severity = error
+
+# CS8950:
+dotnet_diagnostic.CS8950.severity = error
+
+# CS8951:
+dotnet_diagnostic.CS8951.severity = error
+
+# CS8952:
+dotnet_diagnostic.CS8952.severity = error
+
+# CS8953:
+dotnet_diagnostic.CS8953.severity = error
+
+# CS8954:
+dotnet_diagnostic.CS8954.severity = error
+
+# CS8955:
+dotnet_diagnostic.CS8955.severity = error
+
+# CS8956:
+dotnet_diagnostic.CS8956.severity = error
+
+# CS8957:
+dotnet_diagnostic.CS8957.severity = error
+
+# CS8958:
+dotnet_diagnostic.CS8958.severity = error
+
+# CS8959:
+dotnet_diagnostic.CS8959.severity = error
+
+# CS8960: The CallerArgumentExpressionAttribute will have no effect; it is overridden by the CallerLineNumberAttribute
+dotnet_diagnostic.CS8960.severity = error
+
+# CS8961: The CallerArgumentExpressionAttribute will have no effect; it is overridden by the CallerFilePathAttribute
+dotnet_diagnostic.CS8961.severity = error
+
+# CS8962: The CallerArgumentExpressionAttribute will have no effect; it is overridden by the CallerMemberNameAttribute
+dotnet_diagnostic.CS8962.severity = error
+
+# CS8963: The CallerArgumentExpressionAttribute is applied with an invalid parameter name.
+dotnet_diagnostic.CS8963.severity = error
+
+# CS8964:
+dotnet_diagnostic.CS8964.severity = error
+
+# CS8965: The CallerArgumentExpressionAttribute applied to parameter will have no effect because it's self-refential.
+dotnet_diagnostic.CS8965.severity = error
+
+# CS8966: The CallerArgumentExpressionAttribute will have no effect because it applies to a member that is used in contexts that do not allow optional arguments
+dotnet_diagnostic.CS8966.severity = error
+
+# CS8967:
+dotnet_diagnostic.CS8967.severity = error
+
+# CS8968:
+dotnet_diagnostic.CS8968.severity = error
+
+# CS8970:
+dotnet_diagnostic.CS8970.severity = error
+
+# CS8971: InterpolatedStringHandlerArgument has no effect when applied to lambda parameters and will be ignored at the call site.
+dotnet_diagnostic.CS8971.severity = error
+
+# CS8972:
+dotnet_diagnostic.CS8972.severity = error
+
+# CS8973: The operation may overflow at runtime (use 'unchecked' syntax to override)
+dotnet_diagnostic.CS8973.severity = error
+
+# CS8974: Converting method group to non-delegate type
+dotnet_diagnostic.CS8974.severity = error
+
+# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE1100: Workspace error
 dotnet_diagnostic.IDE1100.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=3.11.4.40306, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=4.0.5.5815, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE0033: Use explicitly provided tuple name
 dotnet_diagnostic.IDE0033.severity = error
@@ -4619,7 +4772,7 @@ dotnet_diagnostic.IDE0044.severity = error
 # IDE0070: Use 'System.HashCode'
 dotnet_diagnostic.IDE0070.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=3.11.4.40306, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=4.0.5.5815, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE0004: Remove Unnecessary Cast
 dotnet_diagnostic.IDE0004.severity = error
@@ -4735,9 +4888,6 @@ dotnet_diagnostic.IDE0047.severity = error
 # IDE0048: Add parentheses for clarity
 dotnet_diagnostic.IDE0048.severity = error
 
-# IDE0050: Convert to tuple
-dotnet_diagnostic.IDE0050.severity = error
-
 # IDE0051: Remove unused private members
 dotnet_diagnostic.IDE0051.severity = error
 
@@ -4834,6 +4984,15 @@ dotnet_diagnostic.IDE0120.severity = error
 # IDE0130: Namespace does not match folder structure
 dotnet_diagnostic.IDE0130.severity = none
 
+# IDE0150: Prefer 'null' check over type check
+dotnet_diagnostic.IDE0150.severity = error
+
+# IDE0160: Convert to block scoped namespace
+dotnet_diagnostic.IDE0160.severity = error
+
+# IDE0161: Convert to file-scoped namespace
+dotnet_diagnostic.IDE0161.severity = error
+
 # IDE1005: Delegate invocation can be simplified.
 dotnet_diagnostic.IDE1005.severity = error
 
@@ -4858,19 +5017,13 @@ dotnet_diagnostic.IDE2004.severity = error
 # RemoveUnnecessaryImportsFixable:
 dotnet_diagnostic.RemoveUnnecessaryImportsFixable.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp.NetAnalyzers, Version=5.0.4.5504, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp.NetAnalyzers, Version=6.0.5.1901, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # CA1001: Types that own disposable fields should be disposable
 dotnet_diagnostic.CA1001.severity = error
 
-# CA1019: Define accessors for attribute arguments
-dotnet_diagnostic.CA1019.severity = error
-
 # CA1032: Implement standard exception constructors
 dotnet_diagnostic.CA1032.severity = error
-
-# CA1065: Do not raise exceptions in unexpected locations
-dotnet_diagnostic.CA1065.severity = error
 
 # CA1200: Avoid using cref tags with a prefix
 dotnet_diagnostic.CA1200.severity = error
@@ -4881,8 +5034,8 @@ dotnet_diagnostic.CA1309.severity = error
 # CA1507: Use nameof to express symbol names
 dotnet_diagnostic.CA1507.severity = error
 
-# CA1801: Review unused parameters
-dotnet_diagnostic.CA1801.severity = error
+# CA1802: Use literals where appropriate
+dotnet_diagnostic.CA1802.severity = error
 
 # CA1805: Do not initialize unnecessarily
 dotnet_diagnostic.CA1805.severity = error
@@ -4896,6 +5049,12 @@ dotnet_diagnostic.CA1824.severity = error
 # CA1825: Avoid zero-length array allocations
 dotnet_diagnostic.CA1825.severity = error
 
+# CA1841: Prefer Dictionary.Contains methods
+dotnet_diagnostic.CA1841.severity = error
+
+# CA1845: Use span-based 'string.Concat'
+dotnet_diagnostic.CA1845.severity = error
+
 # CA2014: Do not use stackalloc in loops
 dotnet_diagnostic.CA2014.severity = error
 
@@ -4904,6 +5063,9 @@ dotnet_diagnostic.CA2016.severity = error
 
 # CA2234: Pass system uri objects instead of strings
 dotnet_diagnostic.CA2234.severity = error
+
+# CA2252: This API requires opting into preview features
+dotnet_diagnostic.CA2252.severity = error
 
 # CA2352: Unsafe DataSet or DataTable in serializable type can be vulnerable to remote code execution attacks
 dotnet_diagnostic.CA2352.severity = error
@@ -4923,13 +5085,7 @@ dotnet_diagnostic.CA2356.severity = error
 # CA2362: Unsafe DataSet or DataTable in auto-generated serializable type can be vulnerable to remote code execution attacks
 dotnet_diagnostic.CA2362.severity = error
 
-# CA3076: Insecure XSLT script processing.
-dotnet_diagnostic.CA3076.severity = error
-
-# CA3077: Insecure Processing in API Design, XmlDocument and XmlTextReader
-dotnet_diagnostic.CA3077.severity = error
-
-# Rules from assembly: Microsoft.CodeAnalysis.NetAnalyzers, Version=5.0.4.5504, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.NetAnalyzers, Version=6.0.5.1901, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # CA1000: Do not declare static members on generic types
 dotnet_diagnostic.CA1000.severity = error
@@ -4963,6 +5119,9 @@ dotnet_diagnostic.CA1017.severity = error
 
 # CA1018: Mark attributes with AttributeUsageAttribute
 dotnet_diagnostic.CA1018.severity = error
+
+# CA1019: Define accessors for attribute arguments
+dotnet_diagnostic.CA1019.severity = error
 
 # CA1021: Avoid out parameters
 dotnet_diagnostic.CA1021.severity = error
@@ -5048,6 +5207,9 @@ dotnet_diagnostic.CA1063.severity = error
 # CA1064: Exceptions should be public
 dotnet_diagnostic.CA1064.severity = error
 
+# CA1065: Do not raise exceptions in unexpected locations
+dotnet_diagnostic.CA1065.severity = error
+
 # CA1066: Implement IEquatable when overriding Object.Equals
 dotnet_diagnostic.CA1066.severity = error
 
@@ -5089,6 +5251,12 @@ dotnet_diagnostic.CA1416.severity = error
 
 # CA1417: Do not use 'OutAttribute' on string parameters for P/Invokes
 dotnet_diagnostic.CA1417.severity = error
+
+# CA1418: Use valid platform string
+dotnet_diagnostic.CA1418.severity = error
+
+# CA1419: Provide a parameterless constructor that is as visible as the containing type for concrete types derived from 'System.Runtime.InteropServices.SafeHandle'
+dotnet_diagnostic.CA1419.severity = error
 
 # CA1501: Avoid excessive inheritance
 dotnet_diagnostic.CA1501.severity = error
@@ -5147,8 +5315,8 @@ dotnet_diagnostic.CA1724.severity = warning
 # CA1725: Parameter names should match base declaration
 dotnet_diagnostic.CA1725.severity = error
 
-# CA1802: Use literals where appropriate
-dotnet_diagnostic.CA1802.severity = error
+# CA1727: Use PascalCase for named placeholders
+dotnet_diagnostic.CA1727.severity = error
 
 # CA1806: Do not ignore method results
 dotnet_diagnostic.CA1806.severity = error
@@ -5222,6 +5390,33 @@ dotnet_diagnostic.CA1837.severity = error
 # CA1838: Avoid 'StringBuilder' parameters for P/Invokes
 dotnet_diagnostic.CA1838.severity = error
 
+# CA1839: Use 'Environment.ProcessPath'
+dotnet_diagnostic.CA1839.severity = error
+
+# CA1840: Use 'Environment.CurrentManagedThreadId'
+dotnet_diagnostic.CA1840.severity = error
+
+# CA1842: Do not use 'WhenAll' with a single task
+dotnet_diagnostic.CA1842.severity = error
+
+# CA1843: Do not use 'WaitAll' with a single task
+dotnet_diagnostic.CA1843.severity = error
+
+# CA1844: Provide memory-based overrides of async methods when subclassing 'Stream'
+dotnet_diagnostic.CA1844.severity = error
+
+# CA1846: Prefer 'AsSpan' over 'Substring'
+dotnet_diagnostic.CA1846.severity = error
+
+# CA1847: Use char literal for a single character lookup
+dotnet_diagnostic.CA1847.severity = error
+
+# CA1848: Use the LoggerMessage delegates
+dotnet_diagnostic.CA1848.severity = error
+
+# CA1849: Call async methods when in an async method
+dotnet_diagnostic.CA1849.severity = error
+
 # CA2000: Dispose objects before losing scope
 dotnet_diagnostic.CA2000.severity = error
 
@@ -5248,6 +5443,12 @@ dotnet_diagnostic.CA2013.severity = error
 
 # CA2015: Do not define finalizers for types derived from MemoryManager<T>
 dotnet_diagnostic.CA2015.severity = error
+
+# CA2017: Parameter count mismatch
+dotnet_diagnostic.CA2017.severity = error
+
+# CA2018: 'Buffer.BlockCopy' expects the number of bytes to be copied for the 'count' argument
+dotnet_diagnostic.CA2018.severity = error
 
 # CA2100: Review SQL queries for security vulnerabilities
 dotnet_diagnostic.CA2100.severity = error
@@ -5345,6 +5546,30 @@ dotnet_diagnostic.CA2248.severity = error
 # CA2249: Consider using 'string.Contains' instead of 'string.IndexOf'
 dotnet_diagnostic.CA2249.severity = error
 
+# CA2250: Use 'ThrowIfCancellationRequested'
+dotnet_diagnostic.CA2250.severity = error
+
+# CA2251: Use 'string.Equals'
+dotnet_diagnostic.CA2251.severity = error
+
+# CA2253: Named placeholders should not be numeric values
+dotnet_diagnostic.CA2253.severity = error
+
+# CA2254: Template should be a static expression
+dotnet_diagnostic.CA2254.severity = error
+
+# CA2255: The 'ModuleInitializer' attribute should not be used in libraries
+dotnet_diagnostic.CA2255.severity = error
+
+# CA2256: All members declared in parent interfaces must have an implementation in a DynamicInterfaceCastableImplementation-attributed interface
+dotnet_diagnostic.CA2256.severity = error
+
+# CA2257: Members defined on an interface with the 'DynamicInterfaceCastableImplementationAttribute' should be 'static'
+dotnet_diagnostic.CA2257.severity = error
+
+# CA2258: Providing a 'DynamicInterfaceCastableImplementation' interface in Visual Basic is unsupported
+dotnet_diagnostic.CA2258.severity = error
+
 # CA2300: Do not use insecure deserializer BinaryFormatter
 dotnet_diagnostic.CA2300.severity = error
 
@@ -5441,6 +5666,12 @@ dotnet_diagnostic.CA3061.severity = error
 # CA3075: Insecure DTD processing in XML
 dotnet_diagnostic.CA3075.severity = error
 
+# CA3076: Insecure XSLT script processing.
+dotnet_diagnostic.CA3076.severity = error
+
+# CA3077: Insecure Processing in API Design, XmlDocument and XmlTextReader
+dotnet_diagnostic.CA3077.severity = error
+
 # CA3147: Mark Verb Handlers With Validate Antiforgery Token
 dotnet_diagnostic.CA3147.severity = error
 
@@ -5531,7 +5762,7 @@ dotnet_diagnostic.CA5383.severity = error
 # CA5384: Do Not Use Digital Signature Algorithm (DSA)
 dotnet_diagnostic.CA5384.severity = error
 
-# CA5385: Use Rivest–Shamir–Adleman (RSA) Algorithm With Sufficient Key Size
+# CA5385: Use Rivestâ€“Shamirâ€“Adleman (RSA) Algorithm With Sufficient Key Size
 dotnet_diagnostic.CA5385.severity = error
 
 # CA5386: Avoid hardcoding SecurityProtocolType value
@@ -5588,13 +5819,13 @@ dotnet_diagnostic.CA5402.severity = error
 # CA5403: Do not hard-code certificate
 dotnet_diagnostic.CA5403.severity = error
 
-# IL3000: Avoid using accessing Assembly file path when publishing as a single-file
-dotnet_diagnostic.IL3000.severity = error
+# CA5404: Do not disable token validation checks
+dotnet_diagnostic.CA5404.severity = error
 
-# IL3001: Avoid using accessing Assembly file path when publishing as a single-file
-dotnet_diagnostic.IL3001.severity = error
+# CA5405: Do not always skip token validation in delegates
+dotnet_diagnostic.CA5405.severity = error
 
-# Rules from assembly: SecurityCodeScan.VS2019, Version=5.2.1.0, Culture=neutral, PublicKeyToken=null
+# Rules from assembly: SecurityCodeScan.VS2019, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
 
 # Debug: ??Debug_title??
 dotnet_diagnostic.Debug.severity = error
@@ -5680,7 +5911,7 @@ dotnet_diagnostic.SCS0028.severity = error
 # SCS0029: Potential Cross-Site Scripting (XSS) vulnerability was found where '{0}' in '{1}' may be tainted by user-controlled data from '{2}' in method '{3}'.
 dotnet_diagnostic.SCS0029.severity = error
 
-# SCS0030: Request validation is enabled only for pages, not for all HTTP requests. {0}({1}): {2}.
+# SCS0030: Request validation is enabled only for pages, not for all HTTP requests in {0}({1}): {2}.
 dotnet_diagnostic.SCS0030.severity = error
 
 # SCS0031: Potential LDAP injection vulnerability was found where '{0}' in '{1}' may be tainted by user-controlled data from '{2}' in method '{3}'.
@@ -5695,7 +5926,7 @@ dotnet_diagnostic.SCS0033.severity = error
 # SCS0034: The {0} property must be set.
 dotnet_diagnostic.SCS0034.severity = error
 
-# Rules from assembly: SonarAnalyzer.CSharp, Version=8.27.0.0, Culture=neutral, PublicKeyToken=c5b62af9de6d7244
+# Rules from assembly: SonarAnalyzer.CSharp, Version=8.33.0.0, Culture=neutral, PublicKeyToken=c5b62af9de6d7244
 
 # S100: Methods and properties should be named in PascalCase
 dotnet_diagnostic.S100.severity = error
@@ -6225,6 +6456,9 @@ dotnet_diagnostic.S3011.severity = error
 # S3052: Members should not be initialized to default values
 dotnet_diagnostic.S3052.severity = error
 
+# S3059: Types should not have members with visibility set higher than the type's visibility
+dotnet_diagnostic.S3059.severity = error
+
 # S3060: "is" should not be used with "this"
 dotnet_diagnostic.S3060.severity = error
 
@@ -6300,6 +6534,9 @@ dotnet_diagnostic.S3256.severity = error
 # S3257: Declarations and initializations should be as concise as possible
 dotnet_diagnostic.S3257.severity = error
 
+# S3260: Non-derived "private" classes and records should be "sealed"
+dotnet_diagnostic.S3260.severity = error
+
 # S3261: Namespaces should not be empty
 dotnet_diagnostic.S3261.severity = error
 
@@ -6314,6 +6551,9 @@ dotnet_diagnostic.S3264.severity = error
 
 # S3265: Non-flags enums should not be used in bitwise operations
 dotnet_diagnostic.S3265.severity = error
+
+# S3267: Loops should be simplified with "LINQ" expressions
+dotnet_diagnostic.S3267.severity = error
 
 # S3329: Cipher Block Chaining IVs should be unpredictable
 dotnet_diagnostic.S3329.severity = error
@@ -7456,3 +7696,4 @@ dotnet_diagnostic.SX1309.severity = none
 
 # SX1309S: Static field names should begin with underscore
 dotnet_diagnostic.SX1309S.severity = none
+
