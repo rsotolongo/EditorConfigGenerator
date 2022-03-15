@@ -25,6 +25,7 @@ Rules with 'none' severity (to be ignored):
 - CS8019
 - IDE0008
 - IDE0130
+- S1172 (seems to be a Visual Studio 2022 bug, will be removed eventually)
 - S1309
 - S1451
 - S1694
