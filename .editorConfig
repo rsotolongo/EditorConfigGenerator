@@ -11,7 +11,7 @@ indent_style = space
 indent_size = 4
 dotnet_analyzer_diagnostic.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # AD0001: Analyzer Failure
 dotnet_diagnostic.AD0001.severity = error
@@ -3172,9 +3172,6 @@ dotnet_diagnostic.CS8075.severity = error
 # CS8076:
 dotnet_diagnostic.CS8076.severity = error
 
-# CS8077:
-dotnet_diagnostic.CS8077.severity = error
-
 # CS8079:
 dotnet_diagnostic.CS8079.severity = error
 
@@ -4756,12 +4753,57 @@ dotnet_diagnostic.CS8973.severity = error
 # CS8974: Converting method group to non-delegate type
 dotnet_diagnostic.CS8974.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# CS8975:
+dotnet_diagnostic.CS8975.severity = error
+
+# CS8976:
+dotnet_diagnostic.CS8976.severity = error
+
+# CS8977:
+dotnet_diagnostic.CS8977.severity = error
+
+# CS8978:
+dotnet_diagnostic.CS8978.severity = error
+
+# CS8979:
+dotnet_diagnostic.CS8979.severity = error
+
+# CS8980:
+dotnet_diagnostic.CS8980.severity = error
+
+# CS8981: The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+dotnet_diagnostic.CS8981.severity = error
+
+# CS8982:
+dotnet_diagnostic.CS8982.severity = error
+
+# CS8983:
+dotnet_diagnostic.CS8983.severity = error
+
+# CS8990:
+dotnet_diagnostic.CS8990.severity = error
+
+# CS8991:
+dotnet_diagnostic.CS8991.severity = error
+
+# CS8992:
+dotnet_diagnostic.CS8992.severity = error
+
+# CS8993: Parameter is null-checked but is null by default.
+dotnet_diagnostic.CS8993.severity = error
+
+# CS8994:
+dotnet_diagnostic.CS8994.severity = error
+
+# CS8995: Nullable type is null-checked and will throw if null.
+dotnet_diagnostic.CS8995.severity = error
+
+# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE1100: Workspace error
 dotnet_diagnostic.IDE1100.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=4.0.5.5815, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=4.1.6.11411, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE0033: Use explicitly provided tuple name
 dotnet_diagnostic.IDE0033.severity = error
@@ -4772,7 +4814,7 @@ dotnet_diagnostic.IDE0044.severity = error
 # IDE0070: Use 'System.HashCode'
 dotnet_diagnostic.IDE0070.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=4.0.5.5815, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=4.1.6.11411, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE0004: Remove Unnecessary Cast
 dotnet_diagnostic.IDE0004.severity = error
@@ -4992,6 +5034,12 @@ dotnet_diagnostic.IDE0160.severity = error
 
 # IDE0161: Convert to file-scoped namespace
 dotnet_diagnostic.IDE0161.severity = error
+
+# IDE0170: Property pattern can be simplified
+dotnet_diagnostic.IDE0170.severity = error
+
+# IDE0180: Use tuple to swap values
+dotnet_diagnostic.IDE0180.severity = error
 
 # IDE1005: Delegate invocation can be simplified.
 dotnet_diagnostic.IDE1005.severity = error
@@ -5825,7 +5873,7 @@ dotnet_diagnostic.CA5404.severity = error
 # CA5405: Do not always skip token validation in delegates
 dotnet_diagnostic.CA5405.severity = error
 
-# Rules from assembly: SecurityCodeScan.VS2019, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+# Rules from assembly: SecurityCodeScan.VS2019, Version=5.6.2.0, Culture=neutral, PublicKeyToken=null
 
 # Debug: ??Debug_title??
 dotnet_diagnostic.Debug.severity = error
@@ -5926,7 +5974,7 @@ dotnet_diagnostic.SCS0033.severity = error
 # SCS0034: The {0} property must be set.
 dotnet_diagnostic.SCS0034.severity = error
 
-# Rules from assembly: SonarAnalyzer.CSharp, Version=8.33.0.0, Culture=neutral, PublicKeyToken=c5b62af9de6d7244
+# Rules from assembly: SonarAnalyzer.CSharp, Version=8.36.1.0, Culture=neutral, PublicKeyToken=c5b62af9de6d7244
 
 # S100: Methods and properties should be named in PascalCase
 dotnet_diagnostic.S100.severity = error
@@ -6034,7 +6082,7 @@ dotnet_diagnostic.S1163.severity = error
 dotnet_diagnostic.S1168.severity = error
 
 # S1172: Unused method parameters should be removed
-dotnet_diagnostic.S1172.severity = error
+dotnet_diagnostic.S1172.severity = none
 
 # S1185: Overriding members should do more than simply call the same member in the base class
 dotnet_diagnostic.S1185.severity = error
@@ -6239,6 +6287,9 @@ dotnet_diagnostic.S2219.severity = error
 
 # S2221: "Exception" should not be caught when not required by called methods
 dotnet_diagnostic.S2221.severity = error
+
+# S2222: Locks should be released
+dotnet_diagnostic.S2222.severity = error
 
 # S2223: Non-constant static fields should not be visible
 dotnet_diagnostic.S2223.severity = error
@@ -7085,6 +7136,9 @@ dotnet_diagnostic.S5766.severity = error
 
 # S5773: Types allowed to be deserialized should be restricted
 dotnet_diagnostic.S5773.severity = error
+
+# S6354: Use a testable date/time provider.
+dotnet_diagnostic.S6354.severity = error
 
 # S818: Literal suffixes should be upper case
 dotnet_diagnostic.S818.severity = error

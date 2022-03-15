@@ -113,7 +113,7 @@ namespace EditorConfig
         /// <summary>
         /// The identifiers to be ìgnored.
         /// </summary>
-        internal static readonly string[] NoneIds = { "CS8019", "IDE0008", "IDE0130", "S1309", "S1451", "S1694", "S4018", "S4023", "SA1101", "SA1118", "SA1200", "SX1309", "SX1309S" };
+        internal static readonly string[] NoneIds = { "CS8019", "IDE0008", "IDE0130", "S1172", "S1309", "S1451", "S1694", "S4018", "S4023", "SA1101", "SA1118", "SA1200", "SX1309", "SX1309S" };
 
         /// <summary>
         /// The identifiers to be warned.
