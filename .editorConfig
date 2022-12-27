@@ -11,7 +11,7 @@ indent_style = space
 indent_size = 4
 dotnet_analyzer_diagnostic.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=4.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # AD0001: Analyzer Failure
 dotnet_diagnostic.AD0001.severity = error
@@ -3826,6 +3826,9 @@ dotnet_diagnostic.CS8428.severity = error
 # CS8429:
 dotnet_diagnostic.CS8429.severity = error
 
+# CS8500: This takes the address of, gets the size of, or declares a pointer to a managed type
+dotnet_diagnostic.CS8500.severity = error
+
 # CS8502:
 dotnet_diagnostic.CS8502.severity = error
 
@@ -4474,10 +4477,10 @@ dotnet_diagnostic.CS8878.severity = error
 # CS8879:
 dotnet_diagnostic.CS8879.severity = error
 
-# CS8880: An auto-implemented property must be fully assigned before control is returned to the caller.
+# CS8880: An auto-implemented property must be fully assigned before control is returned to the caller. Consider updating the language version to auto-default the property.
 dotnet_diagnostic.CS8880.severity = error
 
-# CS8881: Fields of a struct must be fully assigned in a constructor before control is returned to the caller
+# CS8881: Fields of a struct must be fully assigned in a constructor before control is returned to the caller. Consider updating the language version to auto-default the field.
 dotnet_diagnostic.CS8881.severity = error
 
 # CS8882: An out parameter must be assigned to before control leaves the method
@@ -4489,7 +4492,7 @@ dotnet_diagnostic.CS8883.severity = error
 # CS8884: Use of possibly unassigned field
 dotnet_diagnostic.CS8884.severity = error
 
-# CS8885: The 'this' object cannot be used in a constructor before all of its fields have been assigned
+# CS8885: The 'this' object cannot be used in a constructor before all of its fields have been assigned. Consider updating the language version to auto-default the unassigned fields.
 dotnet_diagnostic.CS8885.severity = error
 
 # CS8886: Use of unassigned out parameter
@@ -4780,30 +4783,315 @@ dotnet_diagnostic.CS8982.severity = error
 # CS8983:
 dotnet_diagnostic.CS8983.severity = error
 
-# CS8990:
-dotnet_diagnostic.CS8990.severity = error
+# CS8985:
+dotnet_diagnostic.CS8985.severity = error
 
-# CS8991:
-dotnet_diagnostic.CS8991.severity = error
+# CS8986:
+dotnet_diagnostic.CS8986.severity = error
 
-# CS8992:
-dotnet_diagnostic.CS8992.severity = error
+# CS8987:
+dotnet_diagnostic.CS8987.severity = error
 
-# CS8993: Parameter is null-checked but is null by default.
-dotnet_diagnostic.CS8993.severity = error
+# CS8988:
+dotnet_diagnostic.CS8988.severity = error
 
-# CS8994:
-dotnet_diagnostic.CS8994.severity = error
+# CS8989:
+dotnet_diagnostic.CS8989.severity = error
 
-# CS8995: Nullable type is null-checked and will throw if null.
-dotnet_diagnostic.CS8995.severity = error
+# CS8996:
+dotnet_diagnostic.CS8996.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# CS8997:
+dotnet_diagnostic.CS8997.severity = error
+
+# CS8998:
+dotnet_diagnostic.CS8998.severity = error
+
+# CS8999:
+dotnet_diagnostic.CS8999.severity = error
+
+# CS9000:
+dotnet_diagnostic.CS9000.severity = error
+
+# CS9001:
+dotnet_diagnostic.CS9001.severity = error
+
+# CS9002:
+dotnet_diagnostic.CS9002.severity = error
+
+# CS9003:
+dotnet_diagnostic.CS9003.severity = error
+
+# CS9004:
+dotnet_diagnostic.CS9004.severity = error
+
+# CS9005:
+dotnet_diagnostic.CS9005.severity = error
+
+# CS9006:
+dotnet_diagnostic.CS9006.severity = error
+
+# CS9007:
+dotnet_diagnostic.CS9007.severity = error
+
+# CS9008:
+dotnet_diagnostic.CS9008.severity = error
+
+# CS9009:
+dotnet_diagnostic.CS9009.severity = error
+
+# CS9010:
+dotnet_diagnostic.CS9010.severity = error
+
+# CS9011:
+dotnet_diagnostic.CS9011.severity = error
+
+# CS9012:
+dotnet_diagnostic.CS9012.severity = error
+
+# CS9013:
+dotnet_diagnostic.CS9013.severity = error
+
+# CS9014:
+dotnet_diagnostic.CS9014.severity = error
+
+# CS9015:
+dotnet_diagnostic.CS9015.severity = error
+
+# CS9016: Use of possibly unassigned auto-implemented property. Consider updating the language version to auto-default the property.
+dotnet_diagnostic.CS9016.severity = error
+
+# CS9017: Use of possibly unassigned field. Consider updating the language version to auto-default the field.
+dotnet_diagnostic.CS9017.severity = error
+
+# CS9018: Auto-implemented property is read before being explicitly assigned, causing a preceding implicit assignment of 'default'.
+dotnet_diagnostic.CS9018.severity = error
+
+# CS9019: Field is read before being explicitly assigned, causing a preceding implicit assignment of 'default'.
+dotnet_diagnostic.CS9019.severity = error
+
+# CS9020: The 'this' object is read before all of its fields have been assigned, causing preceding implicit assignments of 'default' to non-explicitly assigned fields.
+dotnet_diagnostic.CS9020.severity = error
+
+# CS9021: Control is returned to caller before auto-implemented property is explicitly assigned, causing a preceding implicit assignment of 'default'.
+dotnet_diagnostic.CS9021.severity = error
+
+# CS9022: Control is returned to caller before field is explicitly assigned, causing a preceding implicit assignment of 'default'.
+dotnet_diagnostic.CS9022.severity = error
+
+# CS9023:
+dotnet_diagnostic.CS9023.severity = error
+
+# CS9024:
+dotnet_diagnostic.CS9024.severity = error
+
+# CS9025:
+dotnet_diagnostic.CS9025.severity = error
+
+# CS9027:
+dotnet_diagnostic.CS9027.severity = error
+
+# CS9028:
+dotnet_diagnostic.CS9028.severity = error
+
+# CS9029:
+dotnet_diagnostic.CS9029.severity = error
+
+# CS9030:
+dotnet_diagnostic.CS9030.severity = error
+
+# CS9031:
+dotnet_diagnostic.CS9031.severity = error
+
+# CS9032:
+dotnet_diagnostic.CS9032.severity = error
+
+# CS9033:
+dotnet_diagnostic.CS9033.severity = error
+
+# CS9034:
+dotnet_diagnostic.CS9034.severity = error
+
+# CS9035:
+dotnet_diagnostic.CS9035.severity = error
+
+# CS9036:
+dotnet_diagnostic.CS9036.severity = error
+
+# CS9037:
+dotnet_diagnostic.CS9037.severity = error
+
+# CS9038:
+dotnet_diagnostic.CS9038.severity = error
+
+# CS9039:
+dotnet_diagnostic.CS9039.severity = error
+
+# CS9040:
+dotnet_diagnostic.CS9040.severity = error
+
+# CS9041:
+dotnet_diagnostic.CS9041.severity = error
+
+# CS9042: Members attributed with 'ObsoleteAttribute' should not be required unless the containing type is obsolete or all constructors are obsolete.
+dotnet_diagnostic.CS9042.severity = error
+
+# CS9043:
+dotnet_diagnostic.CS9043.severity = error
+
+# CS9044:
+dotnet_diagnostic.CS9044.severity = error
+
+# CS9045:
+dotnet_diagnostic.CS9045.severity = error
+
+# CS9046:
+dotnet_diagnostic.CS9046.severity = error
+
+# CS9047:
+dotnet_diagnostic.CS9047.severity = error
+
+# CS9048:
+dotnet_diagnostic.CS9048.severity = error
+
+# CS9049:
+dotnet_diagnostic.CS9049.severity = error
+
+# CS9050:
+dotnet_diagnostic.CS9050.severity = error
+
+# CS9051:
+dotnet_diagnostic.CS9051.severity = error
+
+# CS9052:
+dotnet_diagnostic.CS9052.severity = error
+
+# CS9053:
+dotnet_diagnostic.CS9053.severity = error
+
+# CS9054:
+dotnet_diagnostic.CS9054.severity = error
+
+# CS9055:
+dotnet_diagnostic.CS9055.severity = error
+
+# CS9056:
+dotnet_diagnostic.CS9056.severity = error
+
+# CS9057: The analyzer assembly references a newer version of the compiler than the currently running version.
+dotnet_diagnostic.CS9057.severity = error
+
+# CS9058:
+dotnet_diagnostic.CS9058.severity = error
+
+# CS9059:
+dotnet_diagnostic.CS9059.severity = error
+
+# CS9060:
+dotnet_diagnostic.CS9060.severity = error
+
+# CS9062:
+dotnet_diagnostic.CS9062.severity = error
+
+# CS9063:
+dotnet_diagnostic.CS9063.severity = error
+
+# CS9064:
+dotnet_diagnostic.CS9064.severity = error
+
+# CS9065:
+dotnet_diagnostic.CS9065.severity = error
+
+# CS9066:
+dotnet_diagnostic.CS9066.severity = error
+
+# CS9067: Analyzer reference specified multiple times
+dotnet_diagnostic.CS9067.severity = error
+
+# CS9069:
+dotnet_diagnostic.CS9069.severity = error
+
+# CS9070:
+dotnet_diagnostic.CS9070.severity = error
+
+# CS9071:
+dotnet_diagnostic.CS9071.severity = error
+
+# CS9073: The 'scoped' modifier of parameter doesn't match target.
+dotnet_diagnostic.CS9073.severity = error
+
+# CS9074: The 'scoped' modifier of parameter doesn't match overridden or implemented member.
+dotnet_diagnostic.CS9074.severity = error
+
+# CS9075:
+dotnet_diagnostic.CS9075.severity = error
+
+# CS9076:
+dotnet_diagnostic.CS9076.severity = error
+
+# CS9077:
+dotnet_diagnostic.CS9077.severity = error
+
+# CS9078:
+dotnet_diagnostic.CS9078.severity = error
+
+# CS9079:
+dotnet_diagnostic.CS9079.severity = error
+
+# CS9080: Use of variable in this context may expose referenced variables outside of their declaration scope
+dotnet_diagnostic.CS9080.severity = error
+
+# CS9081: A result of a stackalloc expression of this type in this context may be exposed outside of the containing method
+dotnet_diagnostic.CS9081.severity = error
+
+# CS9082: Local is returned by reference but was initialized to a value that cannot be returned by reference
+dotnet_diagnostic.CS9082.severity = error
+
+# CS9083: A member is returned by reference but was initialized to a value that cannot be returned by reference
+dotnet_diagnostic.CS9083.severity = error
+
+# CS9084: Struct member returns 'this' or other instance members by reference
+dotnet_diagnostic.CS9084.severity = error
+
+# CS9085: This ref-assigns a value that has a narrower escape scope than the target.
+dotnet_diagnostic.CS9085.severity = error
+
+# CS9086: The branches of the ref conditional operator refer to variables with incompatible declaration scopes
+dotnet_diagnostic.CS9086.severity = error
+
+# CS9087: This returns a parameter by reference but it is not a ref parameter
+dotnet_diagnostic.CS9087.severity = error
+
+# CS9088: This returns a parameter by reference but it is scoped to the current method
+dotnet_diagnostic.CS9088.severity = error
+
+# CS9089: This returns by reference a member of parameter that is not a ref or out parameter
+dotnet_diagnostic.CS9089.severity = error
+
+# CS9090: This returns by reference a member of parameter that is scoped to the current method
+dotnet_diagnostic.CS9090.severity = error
+
+# CS9091: This returns local by reference but it is not a ref local
+dotnet_diagnostic.CS9091.severity = error
+
+# CS9092: This returns a member of local by reference but it is not a ref local
+dotnet_diagnostic.CS9092.severity = error
+
+# CS9093: This ref-assigns a value that can only escape the current method through a return statement.
+dotnet_diagnostic.CS9093.severity = error
+
+# CS9094: This returns a parameter by reference through a ref parameter; but it can only safely be returned in a return statement
+dotnet_diagnostic.CS9094.severity = error
+
+# CS9095: This returns by reference a member of parameter through a ref parameter; but it can only safely be returned in a return statement
+dotnet_diagnostic.CS9095.severity = error
+
+# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=4.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE1100: Workspace error
 dotnet_diagnostic.IDE1100.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=4.1.6.11411, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=4.4.7.6111, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE0033: Use explicitly provided tuple name
 dotnet_diagnostic.IDE0033.severity = error
@@ -4814,7 +5102,7 @@ dotnet_diagnostic.IDE0044.severity = error
 # IDE0070: Use 'System.HashCode'
 dotnet_diagnostic.IDE0070.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=4.1.6.11411, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=4.4.7.6111, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE0004: Remove Unnecessary Cast
 dotnet_diagnostic.IDE0004.severity = error
@@ -4861,7 +5149,7 @@ dotnet_diagnostic.IDE0021.severity = error
 # IDE0022: Use expression body for methods
 dotnet_diagnostic.IDE0022.severity = error
 
-# IDE0023: Use expression body for operators
+# IDE0023: Use expression body for conversion operators
 dotnet_diagnostic.IDE0023.severity = error
 
 # IDE0024: Use expression body for operators
@@ -4935,6 +5223,9 @@ dotnet_diagnostic.IDE0051.severity = error
 
 # IDE0052: Remove unread private members
 dotnet_diagnostic.IDE0052.severity = error
+
+# IDE0053: Use expression body for lambda expressions
+dotnet_diagnostic.IDE0053.severity = error
 
 # IDE0054: Use compound assignment
 dotnet_diagnostic.IDE0054.severity = error
@@ -5030,7 +5321,7 @@ dotnet_diagnostic.IDE0130.severity = none
 dotnet_diagnostic.IDE0150.severity = error
 
 # IDE0160: Convert to block scoped namespace
-dotnet_diagnostic.IDE0160.severity = error
+dotnet_diagnostic.IDE0160.severity = none
 
 # IDE0161: Convert to file-scoped namespace
 dotnet_diagnostic.IDE0161.severity = error
@@ -5041,13 +5332,37 @@ dotnet_diagnostic.IDE0170.severity = error
 # IDE0180: Use tuple to swap values
 dotnet_diagnostic.IDE0180.severity = error
 
+# IDE0200: Remove unnecessary lambda expression
+dotnet_diagnostic.IDE0200.severity = error
+
+# IDE0210: Convert to top-level statements
+dotnet_diagnostic.IDE0210.severity = error
+
+# IDE0211: Convert to 'Program.Main' style program
+dotnet_diagnostic.IDE0211.severity = error
+
+# IDE0220: Add explicit cast
+dotnet_diagnostic.IDE0220.severity = error
+
+# IDE0230: Use UTF-8 string literal
+dotnet_diagnostic.IDE0230.severity = error
+
+# IDE0240: Remove redundant nullable directive
+dotnet_diagnostic.IDE0240.severity = error
+
+# IDE0241: Remove unnecessary nullable directive
+dotnet_diagnostic.IDE0241.severity = error
+
+# IDE0250: Make struct 'readonly'
+dotnet_diagnostic.IDE0250.severity = error
+
 # IDE1005: Delegate invocation can be simplified.
 dotnet_diagnostic.IDE1005.severity = error
 
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = error
 
-# IDE2000: C#
+# IDE2000: Avoid multiple blank lines
 dotnet_diagnostic.IDE2000.severity = error
 
 # IDE2001: Embedded statements must be on their own line
@@ -5056,7 +5371,7 @@ dotnet_diagnostic.IDE2001.severity = error
 # IDE2002: Consecutive braces must not have blank line between them
 dotnet_diagnostic.IDE2002.severity = error
 
-# IDE2003: C#
+# IDE2003: Blank line required between block and subsequent statement
 dotnet_diagnostic.IDE2003.severity = error
 
 # IDE2004: Blank line not allowed after constructor initializer colon
@@ -5065,7 +5380,7 @@ dotnet_diagnostic.IDE2004.severity = error
 # RemoveUnnecessaryImportsFixable:
 dotnet_diagnostic.RemoveUnnecessaryImportsFixable.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp.NetAnalyzers, Version=6.0.5.1901, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp.NetAnalyzers, Version=7.0.7.1801, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # CA1001: Types that own disposable fields should be disposable
 dotnet_diagnostic.CA1001.severity = error
@@ -5078,6 +5393,9 @@ dotnet_diagnostic.CA1200.severity = error
 
 # CA1309: Use ordinal string comparison
 dotnet_diagnostic.CA1309.severity = error
+
+# CA1311: Specify a culture or use an invariant version
+dotnet_diagnostic.CA1311.severity = error
 
 # CA1507: Use nameof to express symbol names
 dotnet_diagnostic.CA1507.severity = error
@@ -5103,17 +5421,29 @@ dotnet_diagnostic.CA1841.severity = error
 # CA1845: Use span-based 'string.Concat'
 dotnet_diagnostic.CA1845.severity = error
 
+# CA1851: Possible multiple enumerations of 'IEnumerable' collection
+dotnet_diagnostic.CA1851.severity = error
+
+# CA1855: Prefer 'Clear' over 'Fill'
+dotnet_diagnostic.CA1855.severity = error
+
 # CA2014: Do not use stackalloc in loops
 dotnet_diagnostic.CA2014.severity = error
 
 # CA2016: Forward the 'CancellationToken' parameter to methods
 dotnet_diagnostic.CA2016.severity = error
 
+# CA2020: Prevent from behavioral change
+dotnet_diagnostic.CA2020.severity = error
+
 # CA2234: Pass system uri objects instead of strings
 dotnet_diagnostic.CA2234.severity = error
 
 # CA2252: This API requires opting into preview features
 dotnet_diagnostic.CA2252.severity = error
+
+# CA2260: Use correct type parameter
+dotnet_diagnostic.CA2260.severity = error
 
 # CA2352: Unsafe DataSet or DataTable in serializable type can be vulnerable to remote code execution attacks
 dotnet_diagnostic.CA2352.severity = error
@@ -5133,7 +5463,7 @@ dotnet_diagnostic.CA2356.severity = error
 # CA2362: Unsafe DataSet or DataTable in auto-generated serializable type can be vulnerable to remote code execution attacks
 dotnet_diagnostic.CA2362.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.NetAnalyzers, Version=6.0.5.1901, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.NetAnalyzers, Version=7.0.7.1801, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # CA1000: Do not declare static members on generic types
 dotnet_diagnostic.CA1000.severity = error
@@ -5306,6 +5636,15 @@ dotnet_diagnostic.CA1418.severity = error
 # CA1419: Provide a parameterless constructor that is as visible as the containing type for concrete types derived from 'System.Runtime.InteropServices.SafeHandle'
 dotnet_diagnostic.CA1419.severity = error
 
+# CA1420: Property, type, or attribute requires runtime marshalling
+dotnet_diagnostic.CA1420.severity = error
+
+# CA1421: This method uses runtime marshalling even when the 'DisableRuntimeMarshallingAttribute' is applied
+dotnet_diagnostic.CA1421.severity = error
+
+# CA1422: Validate platform compatibility
+dotnet_diagnostic.CA1422.severity = error
+
 # CA1501: Avoid excessive inheritance
 dotnet_diagnostic.CA1501.severity = error
 
@@ -5465,6 +5804,18 @@ dotnet_diagnostic.CA1848.severity = error
 # CA1849: Call async methods when in an async method
 dotnet_diagnostic.CA1849.severity = error
 
+# CA1850: Prefer static 'HashData' method over 'ComputeHash'
+dotnet_diagnostic.CA1850.severity = error
+
+# CA1852: Seal internal types
+dotnet_diagnostic.CA1852.severity = error
+
+# CA1853: Unnecessary call to 'Dictionary.ContainsKey(key)'
+dotnet_diagnostic.CA1853.severity = error
+
+# CA1854: Prefer the 'IDictionary.TryGetValue(TKey, out TValue)' method
+dotnet_diagnostic.CA1854.severity = error
+
 # CA2000: Dispose objects before losing scope
 dotnet_diagnostic.CA2000.severity = error
 
@@ -5497,6 +5848,9 @@ dotnet_diagnostic.CA2017.severity = error
 
 # CA2018: 'Buffer.BlockCopy' expects the number of bytes to be copied for the 'count' argument
 dotnet_diagnostic.CA2018.severity = error
+
+# CA2019: Improper 'ThreadStatic' field initialization
+dotnet_diagnostic.CA2019.severity = error
 
 # CA2100: Review SQL queries for security vulnerabilities
 dotnet_diagnostic.CA2100.severity = error
@@ -5618,6 +5972,9 @@ dotnet_diagnostic.CA2257.severity = error
 # CA2258: Providing a 'DynamicInterfaceCastableImplementation' interface in Visual Basic is unsupported
 dotnet_diagnostic.CA2258.severity = error
 
+# CA2259: 'ThreadStatic' only affects static fields
+dotnet_diagnostic.CA2259.severity = error
+
 # CA2300: Do not use insecure deserializer BinaryFormatter
 dotnet_diagnostic.CA2300.severity = error
 
@@ -5714,7 +6071,7 @@ dotnet_diagnostic.CA3061.severity = error
 # CA3075: Insecure DTD processing in XML
 dotnet_diagnostic.CA3075.severity = error
 
-# CA3076: Insecure XSLT script processing.
+# CA3076: Insecure XSLT script processing
 dotnet_diagnostic.CA3076.severity = error
 
 # CA3077: Insecure Processing in API Design, XmlDocument and XmlTextReader
@@ -5810,7 +6167,7 @@ dotnet_diagnostic.CA5383.severity = error
 # CA5384: Do Not Use Digital Signature Algorithm (DSA)
 dotnet_diagnostic.CA5384.severity = error
 
-# CA5385: Use Rivest–Shamir–Adleman (RSA) Algorithm With Sufficient Key Size
+# CA5385: Use Rivest-Shamir-Adleman (RSA) Algorithm With Sufficient Key Size
 dotnet_diagnostic.CA5385.severity = error
 
 # CA5386: Avoid hardcoding SecurityProtocolType value
@@ -5873,7 +6230,7 @@ dotnet_diagnostic.CA5404.severity = error
 # CA5405: Do not always skip token validation in delegates
 dotnet_diagnostic.CA5405.severity = error
 
-# Rules from assembly: SecurityCodeScan.VS2019, Version=5.6.2.0, Culture=neutral, PublicKeyToken=null
+# Rules from assembly: SecurityCodeScan.VS2019, Version=5.6.7.0, Culture=neutral, PublicKeyToken=null
 
 # Debug: ??Debug_title??
 dotnet_diagnostic.Debug.severity = error
@@ -5974,7 +6331,7 @@ dotnet_diagnostic.SCS0033.severity = error
 # SCS0034: The {0} property must be set.
 dotnet_diagnostic.SCS0034.severity = error
 
-# Rules from assembly: SonarAnalyzer.CSharp, Version=8.36.1.0, Culture=neutral, PublicKeyToken=c5b62af9de6d7244
+# Rules from assembly: SonarAnalyzer.CSharp, Version=8.51.0.0, Culture=neutral, PublicKeyToken=c5b62af9de6d7244
 
 # S100: Methods and properties should be named in PascalCase
 dotnet_diagnostic.S100.severity = error
@@ -6288,7 +6645,7 @@ dotnet_diagnostic.S2219.severity = error
 # S2221: "Exception" should not be caught when not required by called methods
 dotnet_diagnostic.S2221.severity = error
 
-# S2222: Locks should be released
+# S2222: Locks should be released on all paths
 dotnet_diagnostic.S2222.severity = error
 
 # S2223: Non-constant static fields should not be visible
@@ -6681,7 +7038,7 @@ dotnet_diagnostic.S3451.severity = error
 # S3453: Classes should not have only "private" constructors
 dotnet_diagnostic.S3453.severity = error
 
-# S3456: "string.ToCharArray()" should not be called redundantly
+# S3456: "string.ToCharArray()" and "ReadOnlySpan<T>.ToArray()" should not be called redundantly
 dotnet_diagnostic.S3456.severity = error
 
 # S3457: Composite format strings should be used correctly
@@ -7137,8 +7494,29 @@ dotnet_diagnostic.S5766.severity = error
 # S5773: Types allowed to be deserialized should be restricted
 dotnet_diagnostic.S5773.severity = error
 
-# S6354: Use a testable date/time provider.
+# S6354: Use a testable date/time provider
 dotnet_diagnostic.S6354.severity = error
+
+# S6419: Azure Functions should be stateless
+dotnet_diagnostic.S6419.severity = error
+
+# S6420: Client instances should not be recreated on each Azure Function invocation
+dotnet_diagnostic.S6420.severity = error
+
+# S6421: Azure Functions should use Structured Error Handling
+dotnet_diagnostic.S6421.severity = error
+
+# S6422: Calls to "async" methods should not be blocking in Azure Functions
+dotnet_diagnostic.S6422.severity = error
+
+# S6423: Azure Functions should log all failures
+dotnet_diagnostic.S6423.severity = error
+
+# S6424: Interfaces for durable entities should satisfy the restrictions
+dotnet_diagnostic.S6424.severity = error
+
+# S6444: Not specifying a timeout for regular expressions is security-sensitive
+dotnet_diagnostic.S6444.severity = error
 
 # S818: Literal suffixes should be upper case
 dotnet_diagnostic.S818.severity = error

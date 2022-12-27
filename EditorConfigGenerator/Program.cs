@@ -6,21 +6,20 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace EditorConfig
+namespace EditorConfig;
+
+/// <summary>
+/// Entry point implementation.
+/// </summary>
+public static class Program
 {
     /// <summary>
-    /// Entry point implementation.
+    /// Defines the entry point of the application.
     /// </summary>
-    public static class Program
+    public static void Main()
     {
-        /// <summary>
-        /// Defines the entry point of the application.
-        /// </summary>
-        public static void Main()
-        {
-            var parser = new Parser();
-            IList<string> assembliesRuleSeverities = parser.GetAssembliesRuleSevereties(Constants.NoneIds, Constants.WarningIds);
-            File.WriteAllLines(Constants.OutputFilename, assembliesRuleSeverities);
-        }
+        var parser = new Parser();
+        IList<string> assembliesRuleSeverities = parser.GetAssembliesRuleSevereties(Constants.NoneIds, Constants.WarningIds);
+        File.WriteAllLines(Constants.OutputFilename, assembliesRuleSeverities);
     }
 }
