@@ -3,9 +3,6 @@
 //     Copyright (c). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-using System.Collections.Generic;
-using System.IO;
-
 namespace EditorConfig;
 
 /// <summary>
