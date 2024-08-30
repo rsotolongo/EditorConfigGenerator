@@ -19,11 +19,6 @@
             The assemblies path.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.AssemblyRulesHeaderPattern">
-            <summary>
-            The assembly rules header pattern.
-            </summary>
-        </member>
         <member name="F:EditorConfig.Constants.ErrorLevel">
             <summary>
             The error level.
@@ -89,16 +84,6 @@
             The resources pattern.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.RuleHeaderPattern">
-            <summary>
-            The rule header pattern.
-            </summary>
-        </member>
-        <member name="F:EditorConfig.Constants.RuleSeverityPattern">
-            <summary>
-            The rule severity pattern.
-            </summary>
-        </member>
         <member name="F:EditorConfig.Constants.SupportedDiagnosticsPropertyName">
             <summary>
             The supported diagnostics property name.
@@ -109,9 +94,29 @@
             The warning level.
             </summary>
         </member>
+        <member name="F:EditorConfig.Constants.AssemblyRulesHeaderPattern">
+            <summary>
+            The assembly rules header pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.DeprecatedTitlePatterns">
+            <summary>
+            The deprecated title patterns.
+            </summary>
+        </member>
         <member name="F:EditorConfig.Constants.NoneIds">
             <summary>
             The identifiers to be ìgnored.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.RuleHeaderPattern">
+            <summary>
+            The rule header pattern.
+            </summary>
+        </member>
+        <member name="F:EditorConfig.Constants.RuleSeverityPattern">
+            <summary>
+            The rule severity pattern.
             </summary>
         </member>
         <member name="F:EditorConfig.Constants.WarningIds">
@@ -136,6 +141,16 @@
             <param name="type">The type.</param>
             <returns>A type.</returns>
         </member>
+        <member name="M:EditorConfig.Helpers.CreateInstance(AutoFixture.Kernel.ISpecimenBuilder,AutoFixture.Kernel.ISpecimenContext,System.Type,System.Reflection.ConstructorInfo[])">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="fixture">The fixture.</param>
+            <param name="specimenContext">The specimen context.</param>
+            <param name="type">The type.</param>
+            <param name="constructors">The constructors.</param>
+            <returns>The new instance.</returns>
+        </member>
         <member name="M:EditorConfig.Helpers.GetAssemblyRuleSeverities(System.Reflection.Assembly)">
             <summary>
             Gets the assembly rule severities.
@@ -155,15 +170,8 @@
             </summary>
             <param name="type">The type.</param>
             <returns>
-              <c>true</c> if the specified type is simple; otherwise, <c>false</c>.
+              <see langword="true"/> if the specified type is simple; otherwise, <see langword="false"/>.
             </returns>
-        </member>
-        <member name="M:EditorConfig.Helpers.CreateParameterInstances(System.Reflection.ParameterInfo[])">
-            <summary>
-            Creates the parameter instances.
-            </summary>
-            <param name="constructorParameters">The constructor parameters.</param>
-            <returns>A list of parameter instances.</returns>
         </member>
         <member name="M:EditorConfig.Helpers.CreateTypeRule(System.Collections.Generic.List{EditorConfig.Rule},Microsoft.CodeAnalysis.DiagnosticDescriptor)">
             <summary>
@@ -201,17 +209,18 @@
             </summary>
             <param name="assemblyPaths">The assembly paths.</param>
         </member>
-        <member name="M:EditorConfig.Parser.GetAssembliesRuleSevereties(System.String[],System.String[],System.Boolean,System.Boolean)">
+        <member name="M:EditorConfig.Parser.GetAssembliesRuleSevereties(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Gets the assemblies rule severeties.
             </summary>
             <param name="noneIds">The rules identifiers to ignore.</param>
             <param name="warningIds">The rules identifiers to warn about.</param>
-            <param name="addHeader">if set to <c>true</c> [add header].</param>
-            <param name="addSeparator">if set to <c>true</c> [add separator].</param>
+            <param name="addHeader">If set to <see langword="true"/> [add header].</param>
+            <param name="addSeparator">If set to <see langword="true"/> [add separator].</param>
+            <param name="attendDeprecated">If set to <see langword="false"/> deprecated rules will have severity as 'none'. If set to <see langword="true"/> they will treat as any other rule.</param>
             <returns>A list of rule severeties.</returns>
         </member>
-        <member name="M:EditorConfig.Parser.AddAssembly(System.Collections.Generic.ICollection{System.Reflection.Assembly},System.String,System.String,System.Reflection.Assembly)">
+        <member name="M:EditorConfig.Parser.AddAssembly(System.Collections.Generic.List{System.Reflection.Assembly},System.String,System.String,System.Reflection.Assembly)">
             <summary>
             Adds the assembly.
             </summary>
@@ -220,16 +229,26 @@
             <param name="name">The name.</param>
             <param name="referenceAssembly">The reference assembly.</param>
         </member>
-        <member name="M:EditorConfig.Parser.AddRuleSeverety(System.String[],System.String[],System.Boolean,System.Boolean,System.Collections.Generic.ICollection{System.String},EditorConfig.Rule)">
+        <member name="M:EditorConfig.Parser.AddRuleSeverity(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String},EditorConfig.Rule)">
             <summary>
-            Adds the rule severety.
+            Adds the rule severity.
             </summary>
             <param name="noneIds">The none ids.</param>
             <param name="warningIds">The warning ids.</param>
-            <param name="addHeader">if set to <c>true</c> [add header].</param>
-            <param name="addSeparator">if set to <c>true</c> [add separator].</param>
+            <param name="addHeader">If set to <see langword="true"/> a header will be added.</param>
+            <param name="addSeparator">If set to <see langword="true"/> a separator will be added.</param>
+            <param name="attendDeprecated">If set to <see langword="false"/> deprecated rules will have severity as 'none'. If set to <see langword="true"/> they will treat as any other rule.</param>
             <param name="ruleSevereties">The rule severeties.</param>
             <param name="rule">The rule.</param>
+        </member>
+        <member name="M:EditorConfig.Parser.IsDeprecatedRule(EditorConfig.Rule)">
+            <summary>
+            Determines whether a rule is deprecated.
+            </summary>
+            <param name="rule">The rule.</param>
+            <returns>
+              <see langword="true"/> If the rule is deprecated; otherwise, <see langword="false"/>.
+            </returns>
         </member>
         <member name="T:EditorConfig.Program">
             <summary>
@@ -261,6 +280,15 @@
             <value>
             The title.
             </value>
+        </member>
+        <member name="T:EditorConfigGenerator.VoidSpecimenContext">
+            <summary>
+            Void specimen context.
+            </summary>
+            <seealso cref="T:AutoFixture.Kernel.ISpecimenContext" />
+        </member>
+        <member name="M:EditorConfigGenerator.VoidSpecimenContext.Resolve(System.Object)">
+            <inheritdoc/>
         </member>
     </members>
 </doc>

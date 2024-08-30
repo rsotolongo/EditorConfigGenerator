@@ -3,14 +3,12 @@
 //     Copyright (c). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Xml.Linq;
+using AutoFixture;
+using AutoFixture.Kernel;
+using EditorConfigGenerator;
 using Microsoft.CodeAnalysis;
 
 namespace EditorConfig;
@@ -27,30 +25,34 @@ internal static class Helpers
     /// <returns>A type.</returns>
     internal static object CreateType(Type type)
     {
+        var specimenContext = new VoidSpecimenContext();
+        var fixture = new Fixture();
         object instance = default;
-        if ((type != null) && !type.IsAbstract && !type.IsInterface && !IsSimple(type))
+        if ((!type.IsAbstract) && !type.IsInterface && !IsSimple(type))
         {
             ConstructorInfo[] constructors = type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if ((constructors != null) && (constructors.Length > 0))
-            {
-                ParameterInfo[] constructorParameters = constructors[0].GetParameters();
-                if ((constructorParameters != null) && (constructorParameters.Length > 0))
-                {
-                    IList<object> parameterInstances = CreateParameterInstances(constructorParameters);
-                    instance = constructors[0].Invoke(parameterInstances.ToArray());
-                }
-                else
-                {
-                    instance = constructors[0].Invoke(null);
-                }
-            }
-            else
-            {
-                instance = Activator.CreateInstance(type);
-            }
+            instance = constructors?.Length > 0
+                ? CreateInstance(fixture, specimenContext, type, constructors)
+                : Activator.CreateInstance(type);
         }
 
         return instance;
+    }
+
+    /// <summary>
+    /// Creates the instance.
+    /// </summary>
+    /// <param name="fixture">The fixture.</param>
+    /// <param name="specimenContext">The specimen context.</param>
+    /// <param name="type">The type.</param>
+    /// <param name="constructors">The constructors.</param>
+    /// <returns>The new instance.</returns>
+    internal static object CreateInstance(ISpecimenBuilder fixture, ISpecimenContext specimenContext, Type type, ConstructorInfo[] constructors)
+    {
+        ParameterInfo[] constructorParameters = constructors[0].GetParameters();
+        return constructorParameters?.Length > 0
+            ? fixture.Create(type, specimenContext)
+            : constructors[0].Invoke(parameters: null);
     }
 
     /// <summary>
@@ -63,19 +65,15 @@ internal static class Helpers
         var result = new List<Rule>();
         if (assembly != null)
         {
-            Type[] types = assembly.GetTypes();
-            if (types != null)
+            foreach (Type type in assembly.GetTypes().Where(item => !item.IsAbstract).ToArray())
             {
-                foreach (Type type in types)
-                {
-                    PropertyInfo[] properties = type.GetProperties();
-                    PropertyInfo supportedDiagnosticsProperty = properties.FirstOrDefault(item => item.Name == Constants.SupportedDiagnosticsPropertyName);
-                    IList<Rule> typeRules = FindTypeRules(type, supportedDiagnosticsProperty);
-                    result.AddRange(typeRules);
-                }
+                List<PropertyInfo> properties = [.. type.GetProperties()];
+                PropertyInfo supportedDiagnosticsProperty = properties.Find(item => string.Equals(item.Name, Constants.SupportedDiagnosticsPropertyName, StringComparison.Ordinal));
+                IList<Rule> typeRules = FindTypeRules(type, supportedDiagnosticsProperty);
+                result.AddRange(typeRules);
             }
 
-            result = result.OrderBy(item => item.Id).ToList();
+            result = [.. result.OrderBy(item => item.Id, StringComparer.Ordinal)];
         }
 
         return result;
@@ -89,20 +87,20 @@ internal static class Helpers
     {
         var result = new List<string>();
         string currentDirectory = Directory.GetCurrentDirectory();
-        string relativePath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+        string relativePath = OperatingSystem.IsWindows()
             ? Constants.RelativeWindowsPath
             : Constants.RelativeNonWindowsPath;
         string projectDirectory = Path.Combine(currentDirectory, relativePath);
-        string projectPath = Directory.GetFiles(projectDirectory).FirstOrDefault(item => item.EndsWith(Constants.ProjectExtension, StringComparison.InvariantCulture));
+        List<string> filePaths = [.. Directory.GetFiles(projectDirectory)];
+        string projectPath = filePaths.Find(item => item.EndsWith(Constants.ProjectExtension, StringComparison.InvariantCulture));
         if (File.Exists(projectPath))
         {
             XElement projectReference = XElement.Load(projectPath);
-            if (projectReference != null)
+            if (projectReference is not null)
             {
                 string userProfileFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 string packagesFolder = Path.Combine(userProfileFolder, Constants.PackagesDirectoryName, Constants.PackagesSubdirectoryName);
-                IEnumerable<XElement> packageReferences = projectReference.Descendants(Constants.PackageNodeName);
-                foreach (XElement package in packageReferences)
+                foreach (XElement package in projectReference.Descendants(Constants.PackageNodeName))
                 {
                     XAttribute packageNameAttribute = package.Attributes().FirstOrDefault(item => item.Name == Constants.PackageNameAttribute);
                     string packageName = !string.IsNullOrWhiteSpace(packageNameAttribute?.Value)
@@ -120,7 +118,7 @@ internal static class Helpers
             }
         }
 
-        return result.ToArray();
+        return [.. result];
     }
 
     /// <summary>
@@ -128,15 +126,15 @@ internal static class Helpers
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns>
-    ///   <c>true</c> if the specified type is simple; otherwise, <c>false</c>.
+    ///   <see langword="true"/> if the specified type is simple; otherwise, <see langword="false"/>.
     /// </returns>
     internal static bool IsSimple(Type type)
     {
         bool result = false;
         if (type != null)
         {
-            System.Reflection.TypeInfo typeInfo = type.GetTypeInfo();
-            if ((typeInfo != null) && typeInfo.IsGenericType && (typeInfo.GetGenericTypeDefinition() == typeof(Nullable<>)))
+            var typeInfo = type.GetTypeInfo();
+            if ((typeInfo?.IsGenericType is true) && (typeInfo.GetGenericTypeDefinition() == typeof(Nullable<>)))
             {
                 result = IsSimple(typeInfo.GetGenericArguments()[0]);
             }
@@ -157,41 +155,21 @@ internal static class Helpers
     }
 
     /// <summary>
-    /// Creates the parameter instances.
-    /// </summary>
-    /// <param name="constructorParameters">The constructor parameters.</param>
-    /// <returns>A list of parameter instances.</returns>
-    private static IList<object> CreateParameterInstances(ParameterInfo[] constructorParameters)
-    {
-        var result = new List<object>();
-        if (constructorParameters != null)
-        {
-            foreach (ParameterInfo constructorParameter in constructorParameters)
-            {
-                object value = CreateType(constructorParameter.ParameterType);
-                result.Add(value);
-            }
-        }
-
-        return result;
-    }
-
-    /// <summary>
     /// Creates the type rule.
     /// </summary>
     /// <param name="result">The result.</param>
     /// <param name="supportedDiagnostic">The supported diagnostic.</param>
     private static void CreateTypeRule(List<Rule> result, DiagnosticDescriptor supportedDiagnostic)
     {
-        if (supportedDiagnostic != null)
+        if (supportedDiagnostic is not null)
         {
             var rule = new Rule
             {
                 Id = supportedDiagnostic.Id,
                 Title = supportedDiagnostic.Title.ToString(CultureInfo.InvariantCulture),
             };
-            Rule existingRule = result.FirstOrDefault(item => item.Id == rule.Id);
-            if (existingRule == null)
+            Rule existingRule = result.Find(item => string.Equals(item.Id, rule.Id, StringComparison.Ordinal));
+            if (existingRule is null)
             {
                 result.Add(rule);
             }
@@ -203,19 +181,17 @@ internal static class Helpers
     /// </summary>
     /// <param name="type">The type.</param>
     /// <param name="supportedDiagnosticsProperty">The supported diagnostics property.</param>
-    private static IList<Rule> FindTypeRules(Type type, PropertyInfo supportedDiagnosticsProperty)
+    private static List<Rule> FindTypeRules(Type type, PropertyInfo supportedDiagnosticsProperty)
     {
         var result = new List<Rule>();
         if (supportedDiagnosticsProperty != null)
         {
             object instance = CreateType(type);
-            object propertyValue = (instance != null)
-                ? supportedDiagnosticsProperty.GetValue(instance)
-                : default;
-            var supportedDiagnostics = (propertyValue != null)
+            object propertyValue = supportedDiagnosticsProperty.GetValue(instance);
+            var supportedDiagnostics = (propertyValue is not null)
                 ? (IEnumerable<DiagnosticDescriptor>)supportedDiagnosticsProperty.GetValue(instance)
                 : default;
-            if (supportedDiagnostics != null)
+            if (supportedDiagnostics is not null)
             {
                 foreach (DiagnosticDescriptor supportedDiagnostic in supportedDiagnostics)
                 {
@@ -231,15 +207,12 @@ internal static class Helpers
     /// Gets the files.
     /// </summary>
     /// <param name="assemblyFiles">The assembly files.</param>
-    private static IList<string> GetFiles(string[] assemblyFiles)
+    private static List<string> GetFiles(string[] assemblyFiles)
     {
         var result = new List<string>();
-        if (assemblyFiles != null)
+        if (assemblyFiles is not null)
         {
-            foreach (string assemblyFile in assemblyFiles)
-            {
-                result.Add(assemblyFile);
-            }
+            result.AddRange(assemblyFiles);
         }
 
         return result;

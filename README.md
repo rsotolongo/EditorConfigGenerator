@@ -23,19 +23,53 @@ Rules with 'warning' severity:
 Rules with 'none' severity (to be ignored):
 
 - CS8019
+- CS8933
 - IDE0008
 - IDE0130
-- S1172 (seems to be a Visual Studio 2022 bug, will be removed eventually)
+- IDE0160
+- RCS1002
+- RCS1208 (seems to be a Visual Studio 2022 bug, will be removed eventually)
 - S1309
 - S1451
 - S1694
+- S3242
 - S4018
 - S4023
+- SA1010
 - SA1101
 - SA1118
 - SA1200
 - SX1309
 - SX1309S
+
+Other rules with 'none' severity (to be ignored) due to they are deprecated:
+
+- MA0018
+- MA0038
+- MA0041
+- RCS1008
+- RCS1009
+- RCS1010
+- RCS1012
+- RCS1035
+- RCS1038
+- RCS1040
+- RCS1041
+- RCS1063
+- RCS1064
+- RCS1065
+- RCS1066
+- RCS1066FadeOut
+- RCS1072
+- RCS1091
+- RCS1091FadeOut
+- RCS1100
+- RCS1101
+- RCS1106
+- RCS1176
+- RCS1177
+- RCS1208
+- RCS1237
 
 ## How it works? ##
 
