@@ -6,7 +6,7 @@
 using System.Globalization;
 using System.Reflection;
 
-namespace EditorConfig;
+namespace EditorConfigGenerator;
 
 /// <summary>
 /// Parser implementation.

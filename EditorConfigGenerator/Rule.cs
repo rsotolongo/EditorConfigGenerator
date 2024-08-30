@@ -3,7 +3,7 @@
 //     Copyright (c). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace EditorConfig;
+namespace EditorConfigGenerator;
 
 /// <summary>
 /// Rule entity.

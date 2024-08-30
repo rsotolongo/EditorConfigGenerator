@@ -4,144 +4,144 @@
         <name>EditorConfigGenerator</name>
     </assembly>
     <members>
-        <member name="T:EditorConfig.Constants">
+        <member name="T:EditorConfigGenerator.Constants">
             <summary>
             Internal constants.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.AssembliesPattern">
+        <member name="F:EditorConfigGenerator.Constants.AssembliesPattern">
             <summary>
             The assemblies pattern.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.AssembliesPath">
+        <member name="F:EditorConfigGenerator.Constants.AssembliesPath">
             <summary>
             The assemblies path.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.ErrorLevel">
+        <member name="F:EditorConfigGenerator.Constants.ErrorLevel">
             <summary>
             The error level.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.NoneLevel">
+        <member name="F:EditorConfigGenerator.Constants.NoneLevel">
             <summary>
             The none level.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.OtherLanguagePattern">
+        <member name="F:EditorConfigGenerator.Constants.OtherLanguagePattern">
             <summary>
             The other language pattern.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.OutputFilename">
+        <member name="F:EditorConfigGenerator.Constants.OutputFilename">
             <summary>
             The output filename.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.PackageNameAttribute">
+        <member name="F:EditorConfigGenerator.Constants.PackageNameAttribute">
             <summary>
             The package name attribute.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.PackageNodeName">
+        <member name="F:EditorConfigGenerator.Constants.PackageNodeName">
             <summary>
             The package node name.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.PackageVersionAttribute">
+        <member name="F:EditorConfigGenerator.Constants.PackageVersionAttribute">
             <summary>
             The package version attribute.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.PackagesDirectoryName">
+        <member name="F:EditorConfigGenerator.Constants.PackagesDirectoryName">
             <summary>
             The packages directory name.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.PackagesSubdirectoryName">
+        <member name="F:EditorConfigGenerator.Constants.PackagesSubdirectoryName">
             <summary>
             The packages subdirectory name.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.ProjectExtension">
+        <member name="F:EditorConfigGenerator.Constants.ProjectExtension">
             <summary>
             The project extension.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.RelativeNonWindowsPath">
+        <member name="F:EditorConfigGenerator.Constants.RelativeNonWindowsPath">
             <summary>
             The relative path for non Windows OS.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.RelativeWindowsPath">
+        <member name="F:EditorConfigGenerator.Constants.RelativeWindowsPath">
             <summary>
             The relative path for Windows OS.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.ResourcesPattern">
+        <member name="F:EditorConfigGenerator.Constants.ResourcesPattern">
             <summary>
             The resources pattern.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.SupportedDiagnosticsPropertyName">
+        <member name="F:EditorConfigGenerator.Constants.SupportedDiagnosticsPropertyName">
             <summary>
             The supported diagnostics property name.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.WarningLevel">
+        <member name="F:EditorConfigGenerator.Constants.WarningLevel">
             <summary>
             The warning level.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.AssemblyRulesHeaderPattern">
+        <member name="F:EditorConfigGenerator.Constants.AssemblyRulesHeaderPattern">
             <summary>
             The assembly rules header pattern.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.DeprecatedTitlePatterns">
+        <member name="F:EditorConfigGenerator.Constants.DeprecatedTitlePatterns">
             <summary>
             The deprecated title patterns.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.NoneIds">
+        <member name="F:EditorConfigGenerator.Constants.NoneIds">
             <summary>
             The identifiers to be ìgnored.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.RuleHeaderPattern">
+        <member name="F:EditorConfigGenerator.Constants.RuleHeaderPattern">
             <summary>
             The rule header pattern.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.RuleSeverityPattern">
+        <member name="F:EditorConfigGenerator.Constants.RuleSeverityPattern">
             <summary>
             The rule severity pattern.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.WarningIds">
+        <member name="F:EditorConfigGenerator.Constants.WarningIds">
             <summary>
             The identifiers to be warned.
             </summary>
         </member>
-        <member name="F:EditorConfig.Constants.OutputFileHeader">
+        <member name="F:EditorConfigGenerator.Constants.OutputFileHeader">
             <summary>
             The output file header.
             </summary>
         </member>
-        <member name="T:EditorConfig.Helpers">
+        <member name="T:EditorConfigGenerator.Helpers">
             <summary>
             Global routines.
             </summary>
         </member>
-        <member name="M:EditorConfig.Helpers.CreateType(System.Type)">
+        <member name="M:EditorConfigGenerator.Helpers.CreateType(System.Type)">
             <summary>
             Creates the type.
             </summary>
             <param name="type">The type.</param>
             <returns>A type.</returns>
         </member>
-        <member name="M:EditorConfig.Helpers.CreateInstance(AutoFixture.Kernel.ISpecimenBuilder,AutoFixture.Kernel.ISpecimenContext,System.Type,System.Reflection.ConstructorInfo[])">
+        <member name="M:EditorConfigGenerator.Helpers.CreateInstance(AutoFixture.Kernel.ISpecimenBuilder,AutoFixture.Kernel.ISpecimenContext,System.Type,System.Reflection.ConstructorInfo[])">
             <summary>
             Creates the instance.
             </summary>
@@ -151,20 +151,20 @@
             <param name="constructors">The constructors.</param>
             <returns>The new instance.</returns>
         </member>
-        <member name="M:EditorConfig.Helpers.GetAssemblyRuleSeverities(System.Reflection.Assembly)">
+        <member name="M:EditorConfigGenerator.Helpers.GetAssemblyRuleSeverities(System.Reflection.Assembly)">
             <summary>
             Gets the assembly rule severities.
             </summary>
             <param name="assembly">The assembly.</param>
             <returns>A list of rules.</returns>
         </member>
-        <member name="M:EditorConfig.Helpers.GetFiles">
+        <member name="M:EditorConfigGenerator.Helpers.GetFiles">
             <summary>
             Gets the files.
             </summary>
             <returns>A list of files.</returns>
         </member>
-        <member name="M:EditorConfig.Helpers.IsSimple(System.Type)">
+        <member name="M:EditorConfigGenerator.Helpers.IsSimple(System.Type)">
             <summary>
             Determines whether the specified type is simple.
             </summary>
@@ -173,43 +173,43 @@
               <see langword="true"/> if the specified type is simple; otherwise, <see langword="false"/>.
             </returns>
         </member>
-        <member name="M:EditorConfig.Helpers.CreateTypeRule(System.Collections.Generic.List{EditorConfig.Rule},Microsoft.CodeAnalysis.DiagnosticDescriptor)">
+        <member name="M:EditorConfigGenerator.Helpers.CreateTypeRule(System.Collections.Generic.List{EditorConfigGenerator.Rule},Microsoft.CodeAnalysis.DiagnosticDescriptor)">
             <summary>
             Creates the type rule.
             </summary>
             <param name="result">The result.</param>
             <param name="supportedDiagnostic">The supported diagnostic.</param>
         </member>
-        <member name="M:EditorConfig.Helpers.FindTypeRules(System.Type,System.Reflection.PropertyInfo)">
+        <member name="M:EditorConfigGenerator.Helpers.FindTypeRules(System.Type,System.Reflection.PropertyInfo)">
             <summary>
             Finds the type rules.
             </summary>
             <param name="type">The type.</param>
             <param name="supportedDiagnosticsProperty">The supported diagnostics property.</param>
         </member>
-        <member name="M:EditorConfig.Helpers.GetFiles(System.String[])">
+        <member name="M:EditorConfigGenerator.Helpers.GetFiles(System.String[])">
             <summary>
             Gets the files.
             </summary>
             <param name="assemblyFiles">The assembly files.</param>
         </member>
-        <member name="T:EditorConfig.Parser">
+        <member name="T:EditorConfigGenerator.Parser">
             <summary>
             Parser implementation.
             </summary>
         </member>
-        <member name="M:EditorConfig.Parser.#ctor">
+        <member name="M:EditorConfigGenerator.Parser.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:EditorConfig.Parser"/> class.
+            Initializes a new instance of the <see cref="T:EditorConfigGenerator.Parser"/> class.
             </summary>
         </member>
-        <member name="M:EditorConfig.Parser.#ctor(System.String[])">
+        <member name="M:EditorConfigGenerator.Parser.#ctor(System.String[])">
             <summary>
-            Initializes a new instance of the <see cref="T:EditorConfig.Parser"/> class.
+            Initializes a new instance of the <see cref="T:EditorConfigGenerator.Parser"/> class.
             </summary>
             <param name="assemblyPaths">The assembly paths.</param>
         </member>
-        <member name="M:EditorConfig.Parser.GetAssembliesRuleSevereties(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:EditorConfigGenerator.Parser.GetAssembliesRuleSevereties(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Gets the assemblies rule severeties.
             </summary>
@@ -220,7 +220,7 @@
             <param name="attendDeprecated">If set to <see langword="false"/> deprecated rules will have severity as 'none'. If set to <see langword="true"/> they will treat as any other rule.</param>
             <returns>A list of rule severeties.</returns>
         </member>
-        <member name="M:EditorConfig.Parser.AddAssembly(System.Collections.Generic.List{System.Reflection.Assembly},System.String,System.String,System.Reflection.Assembly)">
+        <member name="M:EditorConfigGenerator.Parser.AddAssembly(System.Collections.Generic.List{System.Reflection.Assembly},System.String,System.String,System.Reflection.Assembly)">
             <summary>
             Adds the assembly.
             </summary>
@@ -229,7 +229,7 @@
             <param name="name">The name.</param>
             <param name="referenceAssembly">The reference assembly.</param>
         </member>
-        <member name="M:EditorConfig.Parser.AddRuleSeverity(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String},EditorConfig.Rule)">
+        <member name="M:EditorConfigGenerator.Parser.AddRuleSeverity(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String},EditorConfigGenerator.Rule)">
             <summary>
             Adds the rule severity.
             </summary>
@@ -241,7 +241,7 @@
             <param name="ruleSevereties">The rule severeties.</param>
             <param name="rule">The rule.</param>
         </member>
-        <member name="M:EditorConfig.Parser.IsDeprecatedRule(EditorConfig.Rule)">
+        <member name="M:EditorConfigGenerator.Parser.IsDeprecatedRule(EditorConfigGenerator.Rule)">
             <summary>
             Determines whether a rule is deprecated.
             </summary>
@@ -250,22 +250,12 @@
               <see langword="true"/> If the rule is deprecated; otherwise, <see langword="false"/>.
             </returns>
         </member>
-        <member name="T:EditorConfig.Program">
-            <summary>
-            Entry point implementation.
-            </summary>
-        </member>
-        <member name="M:EditorConfig.Program.Main">
-            <summary>
-            Defines the entry point of the application.
-            </summary>
-        </member>
-        <member name="T:EditorConfig.Rule">
+        <member name="T:EditorConfigGenerator.Rule">
             <summary>
             Rule entity.
             </summary>
         </member>
-        <member name="P:EditorConfig.Rule.Id">
+        <member name="P:EditorConfigGenerator.Rule.Id">
             <summary>
             Gets the identifier.
             </summary>
@@ -273,7 +263,7 @@
             The identifier.
             </value>
         </member>
-        <member name="P:EditorConfig.Rule.Title">
+        <member name="P:EditorConfigGenerator.Rule.Title">
             <summary>
             Gets the title.
             </summary>

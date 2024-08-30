@@ -11,7 +11,7 @@ using AutoFixture.Kernel;
 using EditorConfigGenerator;
 using Microsoft.CodeAnalysis;
 
-namespace EditorConfig;
+namespace EditorConfigGenerator;
 
 /// <summary>
 /// Global routines.

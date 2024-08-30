@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------
 using System.Text;
 
-namespace EditorConfig;
+namespace EditorConfigGenerator;
 
 /// <summary>
 /// Internal constants.
