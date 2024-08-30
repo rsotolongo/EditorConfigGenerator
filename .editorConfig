@@ -11,7 +11,7 @@ indent_style = space
 indent_size = 4
 dotnet_analyzer_diagnostic.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp, Version=4.11.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # AD0001: Analyzer Failure
 dotnet_diagnostic.AD0001.severity = error
@@ -1939,9 +1939,6 @@ dotnet_diagnostic.CS1627.severity = error
 # CS1628:
 dotnet_diagnostic.CS1628.severity = error
 
-# CS1629:
-dotnet_diagnostic.CS1629.severity = error
-
 # CS1631:
 dotnet_diagnostic.CS1631.severity = error
 
@@ -3448,12 +3445,6 @@ dotnet_diagnostic.CS8174.severity = error
 # CS8175:
 dotnet_diagnostic.CS8175.severity = error
 
-# CS8176:
-dotnet_diagnostic.CS8176.severity = error
-
-# CS8177:
-dotnet_diagnostic.CS8177.severity = error
-
 # CS8179:
 dotnet_diagnostic.CS8179.severity = error
 
@@ -3636,9 +3627,6 @@ dotnet_diagnostic.CS8341.severity = error
 
 # CS8342:
 dotnet_diagnostic.CS8342.severity = error
-
-# CS8343:
-dotnet_diagnostic.CS8343.severity = error
 
 # CS8344:
 dotnet_diagnostic.CS8344.severity = error
@@ -3946,7 +3934,7 @@ dotnet_diagnostic.CS8616.severity = error
 # CS8617: Nullability of reference types in type of parameter doesn't match implemented member.
 dotnet_diagnostic.CS8617.severity = error
 
-# CS8618: Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+# CS8618: Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 dotnet_diagnostic.CS8618.severity = error
 
 # CS8619: Nullability of reference types in value doesn't match target type.
@@ -5107,9 +5095,6 @@ dotnet_diagnostic.CS9102.severity = error
 # CS9103:
 dotnet_diagnostic.CS9103.severity = error
 
-# CS9104:
-dotnet_diagnostic.CS9104.severity = error
-
 # CS9105:
 dotnet_diagnostic.CS9105.severity = error
 
@@ -5214,9 +5199,6 @@ dotnet_diagnostic.CS9142.severity = error
 
 # CS9143:
 dotnet_diagnostic.CS9143.severity = error
-
-# CS9145:
-dotnet_diagnostic.CS9145.severity = error
 
 # CS9146:
 dotnet_diagnostic.CS9146.severity = error
@@ -5379,6 +5361,129 @@ dotnet_diagnostic.CS9211.severity = error
 
 # CS9212:
 dotnet_diagnostic.CS9212.severity = error
+
+# CS9213:
+dotnet_diagnostic.CS9213.severity = error
+
+# CS9214:
+dotnet_diagnostic.CS9214.severity = error
+
+# CS9215:
+dotnet_diagnostic.CS9215.severity = error
+
+# CS9216: A value of type 'System.Threading.Lock' converted to a different type will use likely unintended monitor-based locking in 'lock' statement.
+dotnet_diagnostic.CS9216.severity = error
+
+# CS9218:
+dotnet_diagnostic.CS9218.severity = error
+
+# CS9223:
+dotnet_diagnostic.CS9223.severity = error
+
+# CS9224:
+dotnet_diagnostic.CS9224.severity = error
+
+# CS9225:
+dotnet_diagnostic.CS9225.severity = error
+
+# CS9226:
+dotnet_diagnostic.CS9226.severity = error
+
+# CS9227:
+dotnet_diagnostic.CS9227.severity = error
+
+# CS9228:
+dotnet_diagnostic.CS9228.severity = error
+
+# CS9229:
+dotnet_diagnostic.CS9229.severity = error
+
+# CS9230:
+dotnet_diagnostic.CS9230.severity = error
+
+# CS9231:
+dotnet_diagnostic.CS9231.severity = error
+
+# CS9232:
+dotnet_diagnostic.CS9232.severity = error
+
+# CS9233:
+dotnet_diagnostic.CS9233.severity = error
+
+# CS9234:
+dotnet_diagnostic.CS9234.severity = error
+
+# CS9235:
+dotnet_diagnostic.CS9235.severity = error
+
+# CS9236: Compiling requires binding the lambda expression many times. Consider declaring the lambda expression with explicit parameter types, or if the containing method call is generic, consider using explicit type arguments.
+dotnet_diagnostic.CS9236.severity = error
+
+# CS9238:
+dotnet_diagnostic.CS9238.severity = error
+
+# CS9239:
+dotnet_diagnostic.CS9239.severity = error
+
+# CS9240:
+dotnet_diagnostic.CS9240.severity = error
+
+# CS9241:
+dotnet_diagnostic.CS9241.severity = error
+
+# CS9242:
+dotnet_diagnostic.CS9242.severity = error
+
+# CS9243:
+dotnet_diagnostic.CS9243.severity = error
+
+# CS9244:
+dotnet_diagnostic.CS9244.severity = error
+
+# CS9245:
+dotnet_diagnostic.CS9245.severity = error
+
+# CS9246:
+dotnet_diagnostic.CS9246.severity = error
+
+# CS9247:
+dotnet_diagnostic.CS9247.severity = error
+
+# CS9248:
+dotnet_diagnostic.CS9248.severity = error
+
+# CS9249:
+dotnet_diagnostic.CS9249.severity = error
+
+# CS9250:
+dotnet_diagnostic.CS9250.severity = error
+
+# CS9251:
+dotnet_diagnostic.CS9251.severity = error
+
+# CS9252:
+dotnet_diagnostic.CS9252.severity = error
+
+# CS9253:
+dotnet_diagnostic.CS9253.severity = error
+
+# CS9254:
+dotnet_diagnostic.CS9254.severity = error
+
+# CS9255:
+dotnet_diagnostic.CS9255.severity = error
+
+# CS9256: Partial property declarations have signature differences.
+dotnet_diagnostic.CS9256.severity = error
+
+# CS9257:
+dotnet_diagnostic.CS9257.severity = error
+
+# CS9258: Identifier is a contextual keyword, with a specific meaning, in a later language version.
+dotnet_diagnostic.CS9258.severity = error
+
+# CS9259:
+dotnet_diagnostic.CS9259.severity = error
 
 # Rules from assembly: Meziantou.Analyzer, Version=2.0.163.0, Culture=neutral, PublicKeyToken=null
 
@@ -5856,7 +5961,7 @@ dotnet_diagnostic.MA0159.severity = error
 # MA0160: Use ContainsKey instead of TryGetValue
 dotnet_diagnostic.MA0160.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=4.9.10.12906, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CodeStyle, Version=4.11.10.37604, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE0033: Use explicitly provided tuple name
 dotnet_diagnostic.IDE0033.severity = error
@@ -5864,7 +5969,7 @@ dotnet_diagnostic.IDE0033.severity = error
 # IDE0070: Use 'System.HashCode'
 dotnet_diagnostic.IDE0070.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=4.9.10.12906, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.CSharp.CodeStyle, Version=4.11.10.37604, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # EnableGenerateDocumentationFile: Set MSBuild property 'GenerateDocumentationFile' to 'true'
 dotnet_diagnostic.EnableGenerateDocumentationFile.severity = error
@@ -5992,7 +6097,7 @@ dotnet_diagnostic.IDE0051.severity = error
 # IDE0052: Remove unread private members
 dotnet_diagnostic.IDE0052.severity = error
 
-# IDE0053: Use block body for lambda expression
+# IDE0053: Use expression body for lambda expression
 dotnet_diagnostic.IDE0053.severity = error
 
 # IDE0054: Use compound assignment
@@ -6040,7 +6145,7 @@ dotnet_diagnostic.IDE0071.severity = error
 # IDE0072: Add missing cases
 dotnet_diagnostic.IDE0072.severity = error
 
-# IDE0073: The file header is missing or not located at the top of the file
+# IDE0073: The file header does not match the required text
 dotnet_diagnostic.IDE0073.severity = error
 
 # IDE0074: Use compound assignment
@@ -6064,7 +6169,7 @@ dotnet_diagnostic.IDE0079.severity = error
 # IDE0080: Remove unnecessary suppression operator
 dotnet_diagnostic.IDE0080.severity = error
 
-# IDE0082: 'typeof' can be converted  to 'nameof'
+# IDE0082: 'typeof' can be converted to 'nameof'
 dotnet_diagnostic.IDE0082.severity = error
 
 # IDE0083: Use pattern matching
@@ -6156,6 +6261,9 @@ dotnet_diagnostic.IDE0304.severity = error
 
 # IDE0305: Simplify collection initialization
 dotnet_diagnostic.IDE0305.severity = error
+
+# IDE0320: Make anonymous function static
+dotnet_diagnostic.IDE0320.severity = error
 
 # IDE1005: Delegate invocation can be simplified.
 dotnet_diagnostic.IDE1005.severity = error
@@ -7094,7 +7202,7 @@ dotnet_diagnostic.CA5404.severity = error
 # CA5405: Do not always skip token validation in delegates
 dotnet_diagnostic.CA5405.severity = error
 
-# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=4.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+# Rules from assembly: Microsoft.CodeAnalysis.Workspaces, Version=4.11.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 
 # IDE1100: Workspace error
 dotnet_diagnostic.IDE1100.severity = error
