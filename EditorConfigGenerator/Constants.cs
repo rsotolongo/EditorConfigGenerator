@@ -174,8 +174,10 @@ internal static class Constants
         "indent_style = space",
         string.Empty,
         "[*.cs]",
-        "indent_size = 4",
         "dotnet_analyzer_diagnostic.severity = error",
+        "indent_size = 4",
+        "insert_final_newline = true",
+        "trim_trailing_whitespace = true",
         string.Empty,
     ];
 }
