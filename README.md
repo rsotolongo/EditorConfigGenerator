@@ -4,8 +4,11 @@ Sometimes is difficult to keep track of all code analyzers rules and their confi
 
 The analyzers included by default in the solution are (via NuGet packages):
 
+- Meziantou.Analyzer
 - Microsoft.CodeAnalysis.CSharp.CodeStyle
 - Microsoft.CodeAnalysis.NetAnalyzers
+- Microsoft.CodeAnalysis.Workspaces.Common
+- Roslynator.Analyzers
 - SecurityCodeScan.VS2019
 - SonarAnalyzer.CSharp
 - StyleCop.Analyzers
