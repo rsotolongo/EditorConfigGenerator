@@ -103,9 +103,39 @@ internal static class Constants
     internal static readonly CompositeFormat AssemblyRulesHeaderPattern = CompositeFormat.Parse("# Rules from assembly: {0}");
 
     /// <summary>
+    /// The deprecated title patterns.
+    /// </summary>
+    internal static readonly string[] DeprecatedTitlePatterns =
+    [
+        "[deprecated",
+        "(deprecated",
+    ];
+
+    /// <summary>
     /// The identifiers to be ìgnored.
     /// </summary>
-    internal static readonly string[] NoneIds = ["CS8019", "IDE0008", "IDE0130", "IDE0160", "S1172", "S1309", "S1451", "S1694", "S4018", "S4023", "SA1101", "SA1118", "SA1200", "SX1309", "SX1309S"];
+    internal static readonly string[] NoneIds =
+    [
+        "CS8019",
+        "CS8933",
+        "IDE0008",
+        "IDE0130",
+        "IDE0160",
+        "RCS1002",
+        "RCS1208",
+        "S1309",
+        "S1451",
+        "S1694",
+        "S3242",
+        "S4018",
+        "S4023",
+        "SA1010",
+        "SA1101",
+        "SA1118",
+        "SA1200",
+        "SX1309",
+        "SX1309S",
+    ];
 
     /// <summary>
     /// The rule header pattern.
@@ -120,7 +150,14 @@ internal static class Constants
     /// <summary>
     /// The identifiers to be warned.
     /// </summary>
-    internal static readonly string[] WarningIds = ["CA1056", "CA1716", "CA1724", "S1134", "S1135"];
+    internal static readonly string[] WarningIds =
+    [
+        "CA1056",
+        "CA1716",
+        "CA1724",
+        "S1134",
+        "S1135",
+    ];
 
     /// <summary>
     /// The output file header.
