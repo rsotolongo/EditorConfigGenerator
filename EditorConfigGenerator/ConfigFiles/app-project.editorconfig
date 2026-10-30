@@ -1,0 +1,5 @@
+# Place as .editorconfig in each application project folder (API, worker, console)
+[*.cs]
+dotnet_diagnostic.CA2007.severity = none
+# Only if the app is not consumed as a library:
+dotnet_diagnostic.CS1591.severity = none

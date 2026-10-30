@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.Loader;
 
 namespace EditorConfigGenerator;
 
@@ -13,7 +14,7 @@ namespace EditorConfigGenerator;
 /// </summary>
 internal sealed class Parser
 {
-    private readonly Assembly[] assemblies;
+    private readonly Assembly[] _assemblies;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Parser"/> class.
@@ -34,7 +35,7 @@ internal sealed class Parser
         {
             foreach (string path in assemblyPaths.Where(File.Exists))
             {
-                AssemblyName assemblyName = AssemblyName.GetAssemblyName(path);
+                var assemblyName = AssemblyName.GetAssemblyName(path);
                 string fullName = assemblyName?.FullName;
                 string name = assemblyName?.Name;
                 Assembly referenceAssembly = assembliesList.Find(item => string.Equals(item.FullName, fullName, StringComparison.Ordinal));
@@ -42,7 +43,7 @@ internal sealed class Parser
             }
         }
 
-        assemblies = [.. assembliesList];
+        _assemblies = [.. assembliesList];
     }
 
     /// <summary>
@@ -57,7 +58,7 @@ internal sealed class Parser
     internal IList<string> GetAssembliesRuleSevereties(string[] noneIds, string[] warningIds, bool addHeader = true, bool addSeparator = true, bool attendDeprecated = false)
     {
         var result = new List<string>();
-        foreach (Assembly assembly in assemblies)
+        foreach (Assembly assembly in _assemblies)
         {
             IList<Rule> assemblyRuleSeverities = Helpers.GetAssemblyRuleSeverities(assembly);
             if (assemblyRuleSeverities.Count > 0)
@@ -81,6 +82,7 @@ internal sealed class Parser
             }
         }
 
+        result.AddRange(Constants.OutputFileFooter);
         return result;
     }
 
@@ -93,17 +95,15 @@ internal sealed class Parser
     /// <param name="referenceAssembly">The reference assembly.</param>
     private static void AddAssembly(List<Assembly> assembliesList, string assemblyPath, string name, Assembly referenceAssembly)
     {
-        if ((referenceAssembly == null) &&
-            !string.IsNullOrWhiteSpace(name) &&
-            !name.EndsWith(Constants.ResourcesPattern, StringComparison.InvariantCulture) &&
-            !name.Contains(Constants.OtherLanguagePattern, StringComparison.InvariantCulture))
+        if ((referenceAssembly != null) ||
+            string.IsNullOrWhiteSpace(name) ||
+            name.EndsWith(Constants.ResourcesPattern, StringComparison.InvariantCulture) ||
+            name.Contains(Constants.OtherLanguagePattern, StringComparison.InvariantCulture))
         {
-            Assembly assembly = Assembly.LoadFrom(assemblyPath);
-            if (assembly != null)
-            {
-                assembliesList.Add(assembly);
-            }
+            return;
         }
+
+        assembliesList.Add(AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath));
     }
 
     /// <summary>
@@ -122,20 +122,24 @@ internal sealed class Parser
         severityLevel = warningIds.Contains(rule.Id, StringComparer.Ordinal) ? Constants.WarningLevel : severityLevel;
         severityLevel = (!attendDeprecated && IsDeprecatedRule(rule)) ? Constants.NoneLevel : severityLevel;
         string ruleSeverity = string.Format(CultureInfo.InvariantCulture, Constants.RuleSeverityPattern, rule.Id, severityLevel);
-        if (!ruleSevereties.Contains(ruleSeverity, StringComparer.Ordinal))
+        if (ruleSevereties.Contains(ruleSeverity, StringComparer.Ordinal))
         {
-            if (addHeader)
-            {
-                string ruleHeader = string.Format(CultureInfo.InvariantCulture, Constants.RuleHeaderPattern, rule.Id, rule.Title);
-                ruleSevereties.Add(ruleHeader.Trim());
-            }
-
-            ruleSevereties.Add(ruleSeverity.Trim());
-            if (addSeparator)
-            {
-                ruleSevereties.Add(string.Empty);
-            }
+            return;
         }
+
+        if (addHeader)
+        {
+            string ruleHeader = string.Format(CultureInfo.InvariantCulture, Constants.RuleHeaderPattern, rule.Id, rule.Title);
+            ruleSevereties.Add(ruleHeader.Trim());
+        }
+
+        ruleSevereties.Add(ruleSeverity.Trim());
+        if (!addSeparator)
+        {
+            return;
+        }
+
+        ruleSevereties.Add(string.Empty);
     }
 
     /// <summary>

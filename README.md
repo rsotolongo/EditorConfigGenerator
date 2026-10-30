@@ -1,8 +1,10 @@
-# EditorConfigGenerator #
+# EditorConfigGenerator
 
-Sometimes is difficult to keep track of all code analyzers rules and their configured severity. Running this solution, an ".editorconfig" file is generated with few general settings and a list of all rules of all analyzers included in the solution.
+Keeping track of every code analyzer rule and its severity is hard. EditorConfigGenerator is a .NET 10 console app that reads the analyzer packages referenced by its own project and writes an `.editorconfig` that lists every rule of every analyzer with an explicit severity.
 
-The analyzers included by default in the solution are (via NuGet packages):
+## Analyzers covered
+
+The rules come from the NuGet analyzer packages referenced in [EditorConfigGenerator.csproj](EditorConfigGenerator/EditorConfigGenerator.csproj):
 
 - Meziantou.Analyzer
 - Microsoft.CodeAnalysis.CSharp.CodeStyle
@@ -13,71 +15,45 @@ The analyzers included by default in the solution are (via NuGet packages):
 - SonarAnalyzer.CSharp
 - StyleCop.Analyzers
 
-By default all rules are configured by be reported as error but there are fer of them that are configured to be warnings and others to be ignored by the analyzers.
+To cover other analyzers, or other versions of these, edit the `PackageReference` entries and rebuild.
 
-Rules with 'warning' severity:
+## Severity rules
 
-- CA1056
-- CA1716
-- CA1724
-- S1134
-- S1135
+- Every rule is `error` by default.
+- Rule IDs in `Constants.WarningIds` become `warning`.
+- Rule IDs in `Constants.NoneIds` become `none`.
+- Rules whose title contains a deprecation marker (`Constants.DeprecatedTitlePatterns`) become `none`.
 
-Rules with 'none' severity (to be ignored):
+All three lists live in [Constants.cs](EditorConfigGenerator/Constants.cs). Edit them there and regenerate.
 
-- CS8019
-- CS8933
-- IDE0008
-- IDE0130
-- IDE0160
-- RCS1002
-- RCS1208 (seems to be a Visual Studio 2022 bug, will be removed eventually)
-- S1309
-- S1451
-- S1694
-- S3242
-- S4018
-- S4023
-- SA1010
-- SA1101
-- SA1118
-- SA1200
-- SX1309
-- SX1309S
+## Output layout
 
-Other rules with 'none' severity (to be ignored) due to they are deprecated:
+1. `Constants.OutputFileHeader`: general settings and the hand-written style, formatting and naming options.
+2. One `# Rules from assembly: ...` section per analyzer assembly. Each rule gets a comment with its title and a `dotnet_diagnostic.<ID>.severity` line.
 
-- MA0018
-- MA0038
-- MA0041
-- RCS1008
-- RCS1009
-- RCS1010
-- RCS1012
-- RCS1035
-- RCS1038
-- RCS1040
-- RCS1041
-- RCS1063
-- RCS1064
-- RCS1065
-- RCS1066
-- RCS1066FadeOut
-- RCS1072
-- RCS1091
-- RCS1091FadeOut
-- RCS1100
-- RCS1101
-- RCS1106
-- RCS1176
-- RCS1177
-- RCS1208
-- RCS1237
+`Constants.OutputFileFooter` defines the closing section for generated code. It is not appended to the output yet.
 
-## How it works? ##
+## Usage
 
-The solution needs to be downloaded and executed in order to generate the ".editorconfig" file in the working directory. Then, that file can be copied into the target solution to configure explicitly each code analyzer rule. There is no need to install all the same analyzers becuase the out-of-the-box rules are also included in the resulting file; but is something recommended to provide more clarity, stability, and security to the target source code.
+Build the project, then run it **from the build output folder**. The project is located relative to the working directory (`..\..\..`), so running from anywhere else, including `dotnet run` in the project folder, produces an empty file.
 
-This solution reads its own installed NuGet code analyzers packages (from the ".csproj" file) and using Reflection, extracts all rules, assembly per assembly. Before assign the severity of each rule, and based on corresponding constants, it verify if it should be ignored or treated as a warning. Those are the two main reasons why download and compile in own computer (PC or Mac) is needed to generate the ".editorconfig" file.
+```bash
+dotnet build
+cd EditorConfigGenerator/bin/Debug/net10.0
+dotnet EditorConfigGenerator.dll
+```
 
-In case more analyzers are needed or different versions of the included ones, the solution needs modifications. Hopefully this generated file helps to build solutions with zero errors and zero warnings.
+The `.editorconfig` is written to that folder. Copy it into the solution you want to configure. Installing the same analyzers there is recommended, but not required for the built-in rules to appear in the file.
+
+## How it works
+
+1. `Helpers.GetFiles` reads the `PackageReference` entries from the project file and collects the DLLs of each package from `~/.nuget/packages`.
+2. `Parser` loads those assemblies.
+3. `Helpers.GetAssemblyRuleSeverities` instantiates each analyzer type with AutoFixture and reads its `SupportedDiagnostics` to get the rule IDs and titles. Types that cannot be built or whose property throws are skipped.
+4. `Parser` assigns each rule its severity and writes the result.
+
+Because it reads the packages from the local NuGet cache and uses reflection, the generator must be built and run on your own machine.
+
+## Build notes
+
+The project builds with `TreatWarningsAsErrors` and the generated `.editorConfig` in the repo root. After changing `NoneIds`, `WarningIds` or the header, the repo's `.editorConfig` may be stale and block the build. Build once with `-p:RunAnalyzers=false -p:EnforceCodeStyleInBuild=false`, regenerate the file, then build normally.

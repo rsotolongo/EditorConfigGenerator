@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Xml.Linq;
 using AutoFixture;
 using AutoFixture.Kernel;
-using EditorConfigGenerator;
 using Microsoft.CodeAnalysis;
 
 namespace EditorConfigGenerator;
@@ -30,10 +29,10 @@ internal static class Helpers
         object instance = default;
         if ((!type.IsAbstract) && !type.IsInterface && !IsSimple(type))
         {
-            ConstructorInfo[] constructors = type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            ConstructorInfo[] constructors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
             instance = constructors?.Length > 0
                 ? CreateInstance(fixture, specimenContext, type, constructors)
-                : Activator.CreateInstance(type);
+                : default;
         }
 
         return instance;
@@ -65,15 +64,15 @@ internal static class Helpers
         var result = new List<Rule>();
         if (assembly != null)
         {
-            foreach (Type type in assembly.GetTypes().Where(item => !item.IsAbstract).ToArray())
+            foreach (Type type in assembly.GetTypes().Where(static item => !item.IsAbstract).ToArray())
             {
                 List<PropertyInfo> properties = [.. type.GetProperties()];
-                PropertyInfo supportedDiagnosticsProperty = properties.Find(item => string.Equals(item.Name, Constants.SupportedDiagnosticsPropertyName, StringComparison.Ordinal));
+                PropertyInfo supportedDiagnosticsProperty = properties.Find(static item => string.Equals(item.Name, Constants.SupportedDiagnosticsPropertyName, StringComparison.Ordinal));
                 IList<Rule> typeRules = FindTypeRules(type, supportedDiagnosticsProperty);
                 result.AddRange(typeRules);
             }
 
-            result = [.. result.OrderBy(item => item.Id, StringComparer.Ordinal)];
+            result = [.. result.OrderBy(static item => item.Id, StringComparer.Ordinal)];
         }
 
         return result;
@@ -92,21 +91,21 @@ internal static class Helpers
             : Constants.RelativeNonWindowsPath;
         string projectDirectory = Path.Combine(currentDirectory, relativePath);
         List<string> filePaths = [.. Directory.GetFiles(projectDirectory)];
-        string projectPath = filePaths.Find(item => item.EndsWith(Constants.ProjectExtension, StringComparison.InvariantCulture));
+        string projectPath = filePaths.Find(static item => item.EndsWith(Constants.ProjectExtension, StringComparison.InvariantCulture));
         if (File.Exists(projectPath))
         {
-            XElement projectReference = XElement.Load(projectPath);
+            var projectReference = XElement.Load(projectPath);
             if (projectReference is not null)
             {
                 string userProfileFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 string packagesFolder = Path.Combine(userProfileFolder, Constants.PackagesDirectoryName, Constants.PackagesSubdirectoryName);
                 foreach (XElement package in projectReference.Descendants(Constants.PackageNodeName))
                 {
-                    XAttribute packageNameAttribute = package.Attributes().FirstOrDefault(item => item.Name == Constants.PackageNameAttribute);
+                    XAttribute packageNameAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageNameAttribute);
                     string packageName = !string.IsNullOrWhiteSpace(packageNameAttribute?.Value)
                         ? packageNameAttribute.Value.Trim()
                         : string.Empty;
-                    XAttribute packageVersionAttribute = package.Attributes().FirstOrDefault(item => item.Name == Constants.PackageVersionAttribute);
+                    XAttribute packageVersionAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageVersionAttribute);
                     string packageVersion = !string.IsNullOrWhiteSpace(packageVersionAttribute?.Value)
                         ? packageVersionAttribute.Value.Trim()
                         : string.Empty;
@@ -133,18 +132,15 @@ internal static class Helpers
         bool result = false;
         if (type != null)
         {
-            var typeInfo = type.GetTypeInfo();
-            if ((typeInfo?.IsGenericType is true) && (typeInfo.GetGenericTypeDefinition() == typeof(Nullable<>)))
+            System.Reflection.TypeInfo typeInfo = type.GetTypeInfo();
+            if (typeInfo.IsGenericType && (typeInfo.GetGenericTypeDefinition() == typeof(Nullable<>)))
             {
                 result = IsSimple(typeInfo.GetGenericArguments()[0]);
             }
 
-            if (typeInfo != null)
-            {
-                result = result
-                    || typeInfo.IsPrimitive
-                    || typeInfo.IsEnum;
-            }
+            result = result
+                || typeInfo.IsPrimitive
+                || typeInfo.IsEnum;
 
             result = result
                 || type.Equals(typeof(string))
@@ -161,19 +157,22 @@ internal static class Helpers
     /// <param name="supportedDiagnostic">The supported diagnostic.</param>
     private static void CreateTypeRule(List<Rule> result, DiagnosticDescriptor supportedDiagnostic)
     {
-        if (supportedDiagnostic is not null)
+        if (supportedDiagnostic is null)
         {
-            var rule = new Rule
-            {
-                Id = supportedDiagnostic.Id,
-                Title = supportedDiagnostic.Title.ToString(CultureInfo.InvariantCulture),
-            };
-            Rule existingRule = result.Find(item => string.Equals(item.Id, rule.Id, StringComparison.Ordinal));
-            if (existingRule is null)
-            {
-                result.Add(rule);
-            }
+            return;
         }
+
+        var rule = new Rule
+        {
+            Id = supportedDiagnostic.Id,
+            Title = supportedDiagnostic.Title.ToString(CultureInfo.InvariantCulture),
+        };
+        if (result.Exists(item => string.Equals(item.Id, rule.Id, StringComparison.Ordinal)))
+        {
+            return;
+        }
+
+        result.Add(rule);
     }
 
     /// <summary>
@@ -187,10 +186,18 @@ internal static class Helpers
         if (supportedDiagnosticsProperty != null)
         {
             object instance = CreateType(type);
-            object propertyValue = supportedDiagnosticsProperty.GetValue(instance);
-            var supportedDiagnostics = (propertyValue is not null)
-                ? (IEnumerable<DiagnosticDescriptor>)supportedDiagnosticsProperty.GetValue(instance)
-                : default;
+            object propertyValue;
+            try
+            {
+                propertyValue = supportedDiagnosticsProperty.GetValue(instance);
+            }
+            catch (Exception exception) when (exception is TargetInvocationException or TargetException)
+            {
+                // Shim wrappers (e.g. SonarAnalyzer.ShimLayer) throw when built without their wrapped analyzer.
+                return result;
+            }
+
+            var supportedDiagnostics = propertyValue as IEnumerable<DiagnosticDescriptor>;
             if (supportedDiagnostics is not null)
             {
                 foreach (DiagnosticDescriptor supportedDiagnostic in supportedDiagnostics)

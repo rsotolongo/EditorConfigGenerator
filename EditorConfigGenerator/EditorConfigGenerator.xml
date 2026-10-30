@@ -84,6 +84,11 @@
             The resources pattern.
             </summary>
         </member>
+        <member name="F:EditorConfigGenerator.Constants.SectionSeparator">
+            <summary>
+            The section separator comment.
+            </summary>
+        </member>
         <member name="F:EditorConfigGenerator.Constants.SupportedDiagnosticsPropertyName">
             <summary>
             The supported diagnostics property name.
@@ -122,6 +127,11 @@
         <member name="F:EditorConfigGenerator.Constants.WarningIds">
             <summary>
             The identifiers to be warned.
+            </summary>
+        </member>
+        <member name="F:EditorConfigGenerator.Constants.OutputFileFooter">
+            <summary>
+            The output file footer.
             </summary>
         </member>
         <member name="F:EditorConfigGenerator.Constants.OutputFileHeader">
