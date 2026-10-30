@@ -45,6 +45,38 @@ dotnet EditorConfigGenerator.dll
 
 The `.editorconfig` is written to that folder. Copy it into the solution you want to configure. Installing the same analyzers there is recommended, but not required for the built-in rules to appear in the file.
 
+## Companion files
+
+The [ConfigFiles](EditorConfigGenerator/ConfigFiles) folder holds files to copy into the target solution next to the generated `.editorconfig`. The generated file applies to every `*.cs` file. These files relax a few rules for specific kinds of project.
+
+### Per-project `.editorconfig` overrides
+
+Copy the file that matches the project type into that project's folder and name it `.editorconfig`. EditorConfig applies the closest file last, so these override the root file for that project only. Do not set `root = true` in them.
+
+| File | Use in | Rules set to `none` |
+| --- | --- | --- |
+| `app-project.editorconfig` | Each application project (API, worker, console) | `CA2007`; `CS1591` only if the app is not consumed as a library |
+| `web-project.editorconfig` | Each ASP.NET Core web project (controllers must stay public) | `CA2007`, `CA1515`, `CS1591` |
+| `test-project.editorconfig` | Each test project | `CA2007`, `CA1707`, `CA1515`, `CS1591` |
+
+Library projects need no override.
+
+### `CodeMetricsConfig.txt`
+
+Sets the thresholds for the code metrics rules `CA1502` (cyclomatic complexity), `CA1505` (maintainability index) and `CA1506` (class coupling, with separate method and type limits). Copy it to the root of each project that should use these thresholds and register it as an additional file:
+
+```xml
+<ItemGroup>
+  <AdditionalFiles Include="CodeMetricsConfig.txt" />
+</ItemGroup>
+```
+
+The file name must stay exactly `CodeMetricsConfig.txt`, or the analyzer ignores it. Without it, the analyzer uses its default thresholds.
+
+### `StyleCop.json`
+
+Settings for StyleCop.Analyzers. Register it the same way, as `<AdditionalFiles Include="StyleCop.json" />`. This project already does so from `ConfigFiles\StyleCop.json`.
+
 ## How it works
 
 1. `Helpers.GetFiles` reads the `PackageReference` entries from the project file and collects the DLLs of each package from `~/.nuget/packages`.
