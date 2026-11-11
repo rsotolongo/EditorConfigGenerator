@@ -18,19 +18,19 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
 
       - name: Build
-        run: dotnet build EditorConfigGenerator/EditorConfigGenerator.csproj -c Release
+        run: dotnet build EditorConfigGenerator/EditorConfigGenerator.csproj -c Debug
 
       - name: Generate .editorconfig
-        working-directory: EditorConfigGenerator/bin/Release/net10.0
+        working-directory: EditorConfigGenerator/bin/Debug/net10.0
         run: dotnet EditorConfigGenerator.dll
 
       - name: Compute next version
@@ -56,7 +56,7 @@ jobs:
       - name: Package
         run: |
           mkdir -p dist/ConfigFiles
-          cp EditorConfigGenerator/bin/Release/net10.0/.editorconfig dist/.editorconfig
+          cp EditorConfigGenerator/bin/Debug/net10.0/.editorconfig dist/.editorconfig
           cp EditorConfigGenerator/ConfigFiles/*.editorconfig dist/ConfigFiles/
           cp EditorConfigGenerator/ConfigFiles/StyleCop.json EditorConfigGenerator/ConfigFiles/CodeMetricsConfig.txt dist/ConfigFiles/
           (cd dist && zip -r "../EditorConfigGenerator-${{ steps.version.outputs.tag }}.zip" .)
