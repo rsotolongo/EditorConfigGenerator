@@ -99,6 +99,7 @@ internal static class Helpers
             {
                 string userProfileFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 string packagesFolder = Path.Combine(userProfileFolder, Constants.PackagesDirectoryName, Constants.PackagesSubdirectoryName);
+                var caseInsensitive = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
                 foreach (XElement package in projectReference.Descendants(Constants.PackageNodeName))
                 {
                     XAttribute packageNameAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageNameAttribute);
@@ -109,7 +110,8 @@ internal static class Helpers
                     string packageVersion = !string.IsNullOrWhiteSpace(packageVersionAttribute?.Value)
                         ? packageVersionAttribute.Value.Trim()
                         : string.Empty;
-                    string folder = Path.Combine(packagesFolder, packageName, packageVersion);
+                    string packageFolder = Directory.EnumerateDirectories(packagesFolder, packageName, caseInsensitive).First();
+                    string folder = Path.Combine(packageFolder, packageVersion);
                     string[] assemblyFiles = Directory.GetFiles(folder, Constants.AssembliesPattern, SearchOption.AllDirectories);
                     IList<string> files = GetFiles(assemblyFiles);
                     result.AddRange(files);
