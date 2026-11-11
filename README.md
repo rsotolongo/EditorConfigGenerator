@@ -77,6 +77,29 @@ The file name must stay exactly `CodeMetricsConfig.txt`, or the analyzer ignores
 
 Settings for StyleCop.Analyzers. Register it the same way, as `<AdditionalFiles Include="StyleCop.json" />`. This project already does so from `ConfigFiles\StyleCop.json`.
 
+## Releases
+
+Every push to `main` publishes a GitHub release through [release.yml](.github/workflows/release.yml). Pushes that only change `*.md` files or `.gitignore` do not. The workflow builds the project, runs the generator and attaches two assets:
+
+- `EditorConfigGenerator-vX.Y.Z.zip`: the generated `.editorconfig` plus the [companion files](#companion-files).
+- `.editorconfig`: the generated file alone.
+
+Release notes are generated from the commits and pull requests since the previous release. Download a release when you only need the config and don't want to build the generator yourself.
+
+### Versioning
+
+Versions follow [Semantic Versioning](https://semver.org) (`vMAJOR.MINOR.PATCH`). The workflow takes the latest `v*` tag and picks the bump from the commit message that landed on `main`. With squash merges, that is the pull request title.
+
+| Commit message contains | Bump | Use for |
+| --- | --- | --- |
+| `#major` | `v1.2.3` → `v2.0.0` | Changes that break consumers, such as a renamed or removed companion file or a different output layout |
+| `#minor` | `v1.2.3` → `v1.3.0` | New analyzers, new companion files, new severity behavior |
+| neither | `v1.2.3` → `v1.2.4` | Analyzer package updates, changes to `WarningIds` or `NoneIds`, fixes |
+
+The first release is `v1.0.0`. Every rule is `error` by default, so a new analyzer or a stricter severity can break consumers' builds. Treat those as at least a minor bump.
+
+The release build runs with `TreatWarningsAsErrors`, so a stale `.editorconfig` in the repo root can fail it. See [Build notes](#build-notes) before merging changes to `NoneIds`, `WarningIds` or the header.
+
 ## How it works
 
 1. `Helpers.GetFiles` reads the `PackageReference` entries from the project file and collects the DLLs of each package from `~/.nuget/packages`.

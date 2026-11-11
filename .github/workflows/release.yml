@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - ".gitignore"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build
+        run: dotnet build EditorConfigGenerator/EditorConfigGenerator.csproj -c Release
+
+      - name: Generate .editorconfig
+        working-directory: EditorConfigGenerator/bin/Release/net10.0
+        run: dotnet EditorConfigGenerator.dll
+
+      - name: Compute next version
+        id: version
+        run: |
+          latest=$(git tag --list 'v*' --sort=-v:refname | head -n 1)
+          if [ -z "$latest" ]; then
+            next="v1.0.0"
+          else
+            IFS=. read -r major minor patch <<< "${latest#v}"
+            message=$(git log -1 --format=%B)
+            if grep -qi '#major' <<< "$message"; then
+              major=$((major + 1)); minor=0; patch=0
+            elif grep -qi '#minor' <<< "$message"; then
+              minor=$((minor + 1)); patch=0
+            else
+              patch=$((patch + 1))
+            fi
+            next="v${major}.${minor}.${patch}"
+          fi
+          echo "tag=$next" >> "$GITHUB_OUTPUT"
+
+      - name: Package
+        run: |
+          mkdir -p dist/ConfigFiles
+          cp EditorConfigGenerator/bin/Release/net10.0/.editorconfig dist/.editorconfig
+          cp EditorConfigGenerator/ConfigFiles/*.editorconfig dist/ConfigFiles/
+          cp EditorConfigGenerator/ConfigFiles/StyleCop.json EditorConfigGenerator/ConfigFiles/CodeMetricsConfig.txt dist/ConfigFiles/
+          (cd dist && zip -r "../EditorConfigGenerator-${{ steps.version.outputs.tag }}.zip" .)
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            "EditorConfigGenerator-${{ steps.version.outputs.tag }}.zip" \
+            dist/.editorconfig \
+            --target "$GITHUB_SHA" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --generate-notes
