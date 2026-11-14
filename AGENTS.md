@@ -1,6 +1,8 @@
-# CLAUDE.md
+# AGENTS.md
 
-Project rules for EditorConfigGenerator. They take precedence over the global `~/.claude/CLAUDE.md` where they conflict (see "Overrides").
+This file provides guidance to AI coding agents (including Claude Code, OpenAI Codex, OpenCode, and other compatible agents) when working with code in this repository.
+
+It take precedence over the global or profile rules where they conflict (see "Overrides").
 
 ## What this is
 
@@ -69,8 +71,8 @@ The repo-root `.editorconfig` is both generator output and the config this proje
 
 Every push to `main` that touches more than `*.md` or `.gitignore` creates a tagged GitHub release (patch bump by default; `#minor` or `#major` in the head commit message bumps the others). To push without releasing, put `[skip ci]` in the commit message. Pin changes to the workflow (runner image, action versions) are still pushes to `main`, so treat them the same way.
 
-## Overrides of the global CLAUDE.md
+## Overrides of the global or profile rules
 
 - Comments: this project is XML-doc-heavy by analyzer requirement. Follow the surrounding `///` style on members; still add no explanatory `//` comments.
 - Style: the surrounding file wins. Keep the existing `Helpers`/`Parser` shapes rather than introducing records, primary constructors or `Result<,>`; this is a small console tool.
-- Source control is unchanged: no new branches, no commits or pushes unless asked, commits authored by the user with no Claude trailer.
+- Source control is unchanged: no new branches, no commits or pushes unless asked, commits authored only by the user.
