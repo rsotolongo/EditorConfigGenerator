@@ -112,3 +112,15 @@ Because it reads the packages from the local NuGet cache and uses reflection, th
 ## Build notes
 
 The project builds with `TreatWarningsAsErrors` and the generated `.editorConfig` in the repo root. After changing `NoneIds`, `WarningIds` or the header, the repo's `.editorConfig` may be stale and block the build. Build once with `-p:RunAnalyzers=false -p:EnforceCodeStyleInBuild=false`, regenerate the file, then build normally.
+
+## Contributing
+
+Contributions are welcome through pull requests. Nobody except the maintainer can push to `main`, so:
+
+1. Fork the repository and create a branch in your fork.
+2. Make your change. The build must finish with 0 errors and 0 warnings (see [Build notes](#build-notes)).
+3. Open a pull request against `main`.
+
+The maintainer reviews and approves every pull request before it is merged. Merging to `main` publishes a new release.
+
+To report a security problem, use the repository's private vulnerability reporting (Security tab) instead of opening a public issue.
