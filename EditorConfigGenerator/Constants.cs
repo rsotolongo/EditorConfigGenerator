@@ -117,14 +117,6 @@ internal static class Constants
     ];
 
     /// <summary>
-    /// The packages that ship no analyzers and are skipped during discovery.
-    /// </summary>
-    internal static readonly string[] ExcludedPackages =
-    [
-        "Microsoft.Net.Compilers.Toolset",
-    ];
-
-    /// <summary>
     /// The identifiers to be ignored.
     /// </summary>
     internal static readonly string[] NoneIds =

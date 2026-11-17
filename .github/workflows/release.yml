@@ -24,13 +24,13 @@ jobs:
 
       - uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 10.0.x
+          dotnet-version: 11.0.x
 
       - name: Build
         run: dotnet build EditorConfigGenerator/EditorConfigGenerator.csproj -c Debug
 
       - name: Generate .editorconfig
-        working-directory: EditorConfigGenerator/bin/Debug/net10.0
+        working-directory: EditorConfigGenerator/bin/Debug/net11.0
         run: dotnet EditorConfigGenerator.dll
 
       - name: Compute next version
@@ -58,7 +58,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "${{ steps.version.outputs.tag }}" \
-            EditorConfigGenerator/bin/Debug/net10.0/.editorconfig \
+            EditorConfigGenerator/bin/Debug/net11.0/.editorconfig \
             --target "$GITHUB_SHA" \
             --title "${{ steps.version.outputs.tag }}" \
             --generate-notes

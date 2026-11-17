@@ -109,11 +109,6 @@
             The deprecated title patterns.
             </summary>
         </member>
-        <member name="F:EditorConfigGenerator.Constants.ExcludedPackages">
-            <summary>
-            The packages that ship no analyzers and are skipped during discovery.
-            </summary>
-        </member>
         <member name="F:EditorConfigGenerator.Constants.NoneIds">
             <summary>
             The identifiers to be ignored.
@@ -188,12 +183,12 @@
               <see langword="true"/> if the specified type is simple; otherwise, <see langword="false"/>.
             </returns>
         </member>
-        <member name="M:EditorConfigGenerator.Helpers.CreateTypeRule(System.Collections.Generic.List{EditorConfigGenerator.Rule},Microsoft.CodeAnalysis.DiagnosticDescriptor)">
+        <member name="M:EditorConfigGenerator.Helpers.CreateTypeRules(System.Collections.Generic.IEnumerable{Microsoft.CodeAnalysis.DiagnosticDescriptor})">
             <summary>
-            Creates the type rule.
+            Creates the type rules, one per distinct identifier.
             </summary>
-            <param name="result">The result.</param>
-            <param name="supportedDiagnostic">The supported diagnostic.</param>
+            <param name="supportedDiagnostics">The supported diagnostics.</param>
+            <returns>A list of rules.</returns>
         </member>
         <member name="M:EditorConfigGenerator.Helpers.FindTypeRules(System.Type,System.Reflection.PropertyInfo)">
             <summary>
@@ -244,26 +239,27 @@
             <param name="attendDeprecated">If set to <see langword="false"/> deprecated rules will have severity as 'none'. If set to <see langword="true"/> they will treat as any other rule.</param>
             <returns>A list of rule severeties.</returns>
         </member>
-        <member name="M:EditorConfigGenerator.Parser.AddAssembly(System.Collections.Generic.List{System.Reflection.Assembly},System.String,System.String,System.Reflection.Assembly)">
+        <member name="M:EditorConfigGenerator.Parser.LoadAssembly(System.String,System.String,System.Reflection.Assembly)">
             <summary>
-            Adds the assembly.
+            Loads the assembly.
             </summary>
-            <param name="assembliesList">The assemblies list.</param>
             <param name="assemblyPath">The assembly path.</param>
             <param name="name">The name.</param>
             <param name="referenceAssembly">The reference assembly.</param>
+            <returns>The loaded assembly, or an empty array when the assembly must be skipped.</returns>
         </member>
-        <member name="M:EditorConfigGenerator.Parser.AddRuleSeverity(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String},EditorConfigGenerator.Rule)">
+        <member name="M:EditorConfigGenerator.Parser.GetRuleLines(System.String[],System.String[],System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String},EditorConfigGenerator.Rule)">
             <summary>
-            Adds the rule severity.
+            Gets the lines of a rule severity.
             </summary>
             <param name="noneIds">The none ids.</param>
             <param name="warningIds">The warning ids.</param>
             <param name="addHeader">If set to <see langword="true"/> a header will be added.</param>
             <param name="addSeparator">If set to <see langword="true"/> a separator will be added.</param>
             <param name="attendDeprecated">If set to <see langword="false"/> deprecated rules will have severity as 'none'. If set to <see langword="true"/> they will treat as any other rule.</param>
-            <param name="ruleSevereties">The rule severeties.</param>
+            <param name="ruleSevereties">The rule severeties already written.</param>
             <param name="rule">The rule.</param>
+            <returns>The lines to add; empty when the rule severity is already present.</returns>
         </member>
         <member name="M:EditorConfigGenerator.Parser.IsDeprecatedRule(EditorConfigGenerator.Rule)">
             <summary>

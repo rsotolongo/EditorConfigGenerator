@@ -142,28 +142,21 @@ internal static class Helpers
     }
 
     /// <summary>
-    /// Creates the type rule.
+    /// Creates the type rules, one per distinct identifier.
     /// </summary>
-    /// <param name="result">The result.</param>
-    /// <param name="supportedDiagnostic">The supported diagnostic.</param>
-    private static void CreateTypeRule(List<Rule> result, DiagnosticDescriptor supportedDiagnostic)
+    /// <param name="supportedDiagnostics">The supported diagnostics.</param>
+    /// <returns>A list of rules.</returns>
+    private static List<Rule> CreateTypeRules(IEnumerable<DiagnosticDescriptor> supportedDiagnostics)
     {
-        if (supportedDiagnostic is null)
-        {
-            return;
-        }
-
-        var rule = new Rule
-        {
-            Id = supportedDiagnostic.Id,
-            Title = supportedDiagnostic.Title.ToString(CultureInfo.InvariantCulture),
-        };
-        if (result.Exists(item => string.Equals(item.Id, rule.Id, StringComparison.Ordinal)))
-        {
-            return;
-        }
-
-        result.Add(rule);
+        IEnumerable<Rule> rules = supportedDiagnostics
+            .Where(static item => item is not null)
+            .Select(static item => new Rule
+            {
+                Id = item.Id,
+                Title = item.Title.ToString(CultureInfo.InvariantCulture),
+            })
+            .DistinctBy(static item => item.Id, StringComparer.Ordinal);
+        return [.. rules];
     }
 
     /// <summary>
@@ -185,16 +178,13 @@ internal static class Helpers
             catch (Exception exception) when (exception is TargetInvocationException or TargetException)
             {
                 // Shim wrappers (e.g. SonarAnalyzer.ShimLayer) throw when built without their wrapped analyzer.
-                return result;
+                propertyValue = null;
             }
 
             var supportedDiagnostics = propertyValue as IEnumerable<DiagnosticDescriptor>;
             if (supportedDiagnostics is not null)
             {
-                foreach (DiagnosticDescriptor supportedDiagnostic in supportedDiagnostics)
-                {
-                    CreateTypeRule(result, supportedDiagnostic);
-                }
+                result.AddRange(CreateTypeRules(supportedDiagnostics));
             }
         }
 
@@ -214,17 +204,13 @@ internal static class Helpers
         string packageName = !string.IsNullOrWhiteSpace(packageNameAttribute?.Value)
             ? packageNameAttribute.Value.Trim()
             : string.Empty;
-        string[] assemblyFiles = [];
-        if (!Constants.ExcludedPackages.Contains(packageName, StringComparer.OrdinalIgnoreCase))
-        {
-            XAttribute packageVersionAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageVersionAttribute);
-            string packageVersion = !string.IsNullOrWhiteSpace(packageVersionAttribute?.Value)
-                ? packageVersionAttribute.Value.Trim()
-                : string.Empty;
-            string packageFolder = Directory.EnumerateDirectories(packagesFolder, packageName, caseInsensitive).First();
-            string folder = Path.Combine(packageFolder, packageVersion);
-            assemblyFiles = Directory.GetFiles(folder, Constants.AssembliesPattern, SearchOption.AllDirectories);
-        }
+        XAttribute packageVersionAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageVersionAttribute);
+        string packageVersion = !string.IsNullOrWhiteSpace(packageVersionAttribute?.Value)
+            ? packageVersionAttribute.Value.Trim()
+            : string.Empty;
+        string packageFolder = Directory.EnumerateDirectories(packagesFolder, packageName, caseInsensitive).First();
+        string folder = Path.Combine(packageFolder, packageVersion);
+        string[] assemblyFiles = Directory.GetFiles(folder, Constants.AssembliesPattern, SearchOption.AllDirectories);
 
         return GetFiles(assemblyFiles);
     }

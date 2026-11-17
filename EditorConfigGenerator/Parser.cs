@@ -39,7 +39,7 @@ internal sealed class Parser
                 string fullName = assemblyName?.FullName;
                 string name = assemblyName?.Name;
                 Assembly referenceAssembly = assembliesList.Find(item => string.Equals(item.FullName, fullName, StringComparison.Ordinal));
-                AddAssembly(assembliesList, path, name, referenceAssembly);
+                assembliesList.AddRange(LoadAssembly(path, name, referenceAssembly));
             }
         }
 
@@ -77,7 +77,7 @@ internal sealed class Parser
 
                 foreach (Rule rule in assemblyRuleSeverities)
                 {
-                    AddRuleSeverity(noneIds, warningIds, addHeader, addSeparator, attendDeprecated, result, rule);
+                    result.AddRange(GetRuleLines(noneIds, warningIds, addHeader, addSeparator, attendDeprecated, result, rule));
                 }
             }
         }
@@ -87,59 +87,57 @@ internal sealed class Parser
     }
 
     /// <summary>
-    /// Adds the assembly.
+    /// Loads the assembly.
     /// </summary>
-    /// <param name="assembliesList">The assemblies list.</param>
     /// <param name="assemblyPath">The assembly path.</param>
     /// <param name="name">The name.</param>
     /// <param name="referenceAssembly">The reference assembly.</param>
-    private static void AddAssembly(List<Assembly> assembliesList, string assemblyPath, string name, Assembly referenceAssembly)
+    /// <returns>The loaded assembly, or an empty array when the assembly must be skipped.</returns>
+    private static Assembly[] LoadAssembly(string assemblyPath, string name, Assembly referenceAssembly)
     {
-        if ((referenceAssembly != null) ||
+        bool isSkipped = (referenceAssembly != null) ||
             string.IsNullOrWhiteSpace(name) ||
             name.EndsWith(Constants.ResourcesPattern, StringComparison.InvariantCulture) ||
-            name.Contains(Constants.OtherLanguagePattern, StringComparison.InvariantCulture))
-        {
-            return;
-        }
-
-        assembliesList.Add(AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath));
+            name.Contains(Constants.OtherLanguagePattern, StringComparison.InvariantCulture);
+        return isSkipped
+            ? []
+            : [AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath)];
     }
 
     /// <summary>
-    /// Adds the rule severity.
+    /// Gets the lines of a rule severity.
     /// </summary>
     /// <param name="noneIds">The none ids.</param>
     /// <param name="warningIds">The warning ids.</param>
     /// <param name="addHeader">If set to <see langword="true"/> a header will be added.</param>
     /// <param name="addSeparator">If set to <see langword="true"/> a separator will be added.</param>
     /// <param name="attendDeprecated">If set to <see langword="false"/> deprecated rules will have severity as 'none'. If set to <see langword="true"/> they will treat as any other rule.</param>
-    /// <param name="ruleSevereties">The rule severeties.</param>
+    /// <param name="ruleSevereties">The rule severeties already written.</param>
     /// <param name="rule">The rule.</param>
-    private static void AddRuleSeverity(string[] noneIds, string[] warningIds, bool addHeader, bool addSeparator, bool attendDeprecated, List<string> ruleSevereties, Rule rule)
+    /// <returns>The lines to add; empty when the rule severity is already present.</returns>
+    private static List<string> GetRuleLines(string[] noneIds, string[] warningIds, bool addHeader, bool addSeparator, bool attendDeprecated, List<string> ruleSevereties, Rule rule)
     {
         string severityLevel = noneIds.Contains(rule.Id, StringComparer.Ordinal) ? Constants.NoneLevel : Constants.ErrorLevel;
         severityLevel = warningIds.Contains(rule.Id, StringComparer.Ordinal) ? Constants.WarningLevel : severityLevel;
         severityLevel = (!attendDeprecated && IsDeprecatedRule(rule)) ? Constants.NoneLevel : severityLevel;
         string ruleSeverity = string.Format(CultureInfo.InvariantCulture, Constants.RuleSeverityPattern, rule.Id, severityLevel);
-        if (ruleSevereties.Contains(ruleSeverity, StringComparer.Ordinal))
+        var lines = new List<string>();
+        if (!ruleSevereties.Contains(ruleSeverity, StringComparer.Ordinal))
         {
-            return;
+            if (addHeader)
+            {
+                string ruleHeader = string.Format(CultureInfo.InvariantCulture, Constants.RuleHeaderPattern, rule.Id, rule.Title);
+                lines.Add(ruleHeader.Trim());
+            }
+
+            lines.Add(ruleSeverity.Trim());
+            if (addSeparator)
+            {
+                lines.Add(string.Empty);
+            }
         }
 
-        if (addHeader)
-        {
-            string ruleHeader = string.Format(CultureInfo.InvariantCulture, Constants.RuleHeaderPattern, rule.Id, rule.Title);
-            ruleSevereties.Add(ruleHeader.Trim());
-        }
-
-        ruleSevereties.Add(ruleSeverity.Trim());
-        if (!addSeparator)
-        {
-            return;
-        }
-
-        ruleSevereties.Add(string.Empty);
+        return lines;
     }
 
     /// <summary>

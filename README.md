@@ -1,6 +1,6 @@
 # EditorConfigGenerator
 
-Keeping track of every code analyzer rule and its severity is hard. EditorConfigGenerator is a .NET 10 console app that reads the analyzer packages referenced by its own project and writes an `.editorconfig` that lists every rule of every analyzer with an explicit severity.
+Keeping track of every code analyzer rule and its severity is hard. EditorConfigGenerator is a .NET 11 console app that reads the analyzer packages referenced by its own project and writes an `.editorconfig` that lists every rule of every analyzer with an explicit severity.
 
 ## Analyzers covered
 
@@ -17,7 +17,7 @@ The rules come from the NuGet analyzer packages referenced in [EditorConfigGener
 
 To cover other analyzers, or other versions of these, edit the `PackageReference` entries and rebuild.
 
-The project also references `Microsoft.Net.Compilers.Toolset`. It is not an analyzer package: it pins the compiler to the version the CodeStyle analyzer needs. Without it, an SDK with an older compiler fails the build with `CS9057`. The generator skips it (`Constants.ExcludedPackages`). When you raise `Microsoft.CodeAnalysis.CSharp.CodeStyle`, raise the toolset to the same version.
+The compiler comes from the SDK, so an analyzer package newer than the SDK's compiler fails the build with `CS9057`. Keep `Microsoft.CodeAnalysis.CSharp.CodeStyle` at or below the compiler version of the SDK in use.
 
 ## Severity rules
 
@@ -43,7 +43,7 @@ Build the project, then run it **from the build output folder**. The project is 
 
 ```bash
 dotnet build
-cd EditorConfigGenerator/bin/Debug/net10.0
+cd EditorConfigGenerator/bin/Debug/net11.0
 dotnet EditorConfigGenerator.dll
 ```
 
@@ -71,7 +71,7 @@ The release build runs with `TreatWarningsAsErrors`, so a stale `.editorconfig` 
 
 ## How it works
 
-1. `Helpers.GetFiles` reads the `PackageReference` entries from the project file and collects the DLLs of each package from `~/.nuget/packages`, except the packages in `Constants.ExcludedPackages`.
+1. `Helpers.GetFiles` reads the `PackageReference` entries from the project file and collects the DLLs of each package from `~/.nuget/packages`.
 2. `Parser` loads those assemblies.
 3. `Helpers.GetAssemblyRuleSeverities` instantiates each analyzer type with AutoFixture and reads its `SupportedDiagnostics` to get the rule IDs and titles. Types that cannot be built or whose property throws are skipped.
 4. `Parser` assigns each rule its severity and writes the result.
@@ -82,7 +82,7 @@ Because it reads the packages from the local NuGet cache and uses reflection, th
 
 The project builds with `TreatWarningsAsErrors` and the generated `.editorconfig` in the repo root. After changing `NoneIds`, `WarningIds` or the header, the repo's `.editorconfig` may be stale and block the build. Build once with `-p:RunAnalyzers=false -p:EnforceCodeStyleInBuild=false`, run the generator, copy the output over the root `.editorconfig`, then build normally.
 
-If the build fails with `CS9057` ("references version ... of the compiler, which is newer"), the `Microsoft.Net.Compilers.Toolset` version is older than an analyzer package. Raise it to match `Microsoft.CodeAnalysis.CSharp.CodeStyle`.
+If the build fails with `CS9057` ("references version ... of the compiler, which is newer"), an analyzer package is newer than the SDK's compiler. Lower the package version or install a newer SDK.
 
 ## Contributing
 

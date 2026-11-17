@@ -6,7 +6,7 @@ It take precedence over the global or profile rules where they conflict (see "Ov
 
 ## What this is
 
-.NET 10 console app (`EditorConfigGenerator.slnx`, one project). It reads its own `PackageReference` analyzer packages, loads their DLLs from `~/.nuget/packages`, reflects each `DiagnosticAnalyzer`'s `SupportedDiagnostics`, and writes an `.editorconfig` listing every rule with an explicit severity. A GitHub Actions workflow publishes that file as a release.
+.NET 11 console app (`EditorConfigGenerator.slnx`, one project). It reads its own `PackageReference` analyzer packages, loads their DLLs from `~/.nuget/packages`, reflects each `DiagnosticAnalyzer`'s `SupportedDiagnostics`, and writes an `.editorconfig` listing every rule with an explicit severity. A GitHub Actions workflow publishes that file as a release.
 
 ## Layout
 
@@ -24,10 +24,10 @@ It take precedence over the global or profile rules where they conflict (see "Ov
 
 ```bash
 dotnet build
-cd EditorConfigGenerator/bin/Debug/net10.0 && dotnet EditorConfigGenerator.dll
+cd EditorConfigGenerator/bin/Debug/net11.0 && dotnet EditorConfigGenerator.dll
 ```
 
-- Run from `bin/Debug/net10.0`. The project folder is found via `Constants.RelativeWindowsPath` / `RelativeNonWindowsPath` (`../../..`) from the working directory. `dotnet run` from the project folder silently writes an empty `.editorconfig`.
+- Run from `bin/Debug/net11.0`. The project folder is found via `Constants.RelativeWindowsPath` / `RelativeNonWindowsPath` (`../../..`) from the working directory. `dotnet run` from the project folder silently writes an empty `.editorconfig`.
 - Build **Debug**, not Release. `DocumentationFile` is only set for Debug and the doc-file analyzers must pass (the workflow does the same).
 - There are no tests. Verify by building with 0 errors and 0 warnings, running the generator, and checking the output is non-empty (about 10,800 lines) and that its first 74 lines match `OutputFileHeader`.
 
@@ -41,7 +41,7 @@ Rules that surprise people here:
 - `IDE0007`/`IDE0008` follow `csharp_style_var_*`: `var` only when the type is apparent (`new`, casts), explicit type otherwise.
 - Static readonly fields are PascalCase; private instance fields are `_camelCase`.
 - `MA0217`: lambdas that capture nothing must be `static`.
-- `RCS1208`: prefer early returns over nested `if`.
+- One `return` per method, including `void` methods (no early `return;`). `RCS1208` ("Reduce 'if' nesting") stays on and flags a `void` method whose last statement is an `if`; return the computed value or list instead (see `Parser.GetRuleLines`, `Helpers.CreateTypeRules`). Keep nesting within `S134` (3 levels).
 - `S3011`/`S3885`: no `BindingFlags.NonPublic`, no `Assembly.LoadFrom` (use `AssemblyLoadContext.Default.LoadFromAssemblyPath`).
 - `S1192`: a literal repeated 3+ times becomes a constant (e.g. `Constants.SectionSeparator`).
 - Public-facing members need XML docs, and every file starts with the copyright header block (company `RS`). Match the existing files.
@@ -52,7 +52,7 @@ Rules that surprise people here:
 The repo-root `.editorconfig` is both generator output and the config this project is compiled under. After changing `NoneIds`, `WarningIds`, `DeprecatedTitlePatterns` or the header, the committed file is stale and can fail the build (for example `CS8933` in `obj/`). To recover:
 
 1. `dotnet build -p:RunAnalyzers=false -p:EnforceCodeStyleInBuild=false`
-2. Run the generator from `bin/Debug/net10.0`.
+2. Run the generator from `bin/Debug/net11.0`.
 3. Copy the generated file over the root `.editorconfig` (the file is generator output; do not hand-edit it). The first 74 lines come from `Constants.OutputFileHeader`.
 4. Rebuild normally.
 
@@ -63,7 +63,7 @@ The repo-root `.editorconfig` is both generator output and the config this proje
 - Rule-ID lists live only in `Constants.cs`. Do not duplicate them in the README or elsewhere.
 - Adding an analyzer or changing a version means editing the `PackageReference` entries in the csproj; the generator discovers packages from there. `Microsoft.Bcl.AsyncInterfaces` is a deliberate runtime reference so analyzer assemblies load. Do not remove it.
 - Analyzer types that cannot be built or whose `SupportedDiagnostics` throws (for example `SonarAnalyzer.ShimLayer` wrappers) are skipped on purpose.
-- `Microsoft.Net.Compilers.Toolset` is a deliberate reference that pins the compiler to the CodeStyle analyzer's version; without it an older SDK compiler fails the build with `CS9057`. Keep its version equal to `Microsoft.CodeAnalysis.CSharp.CodeStyle`. It ships native DLLs, so it is skipped by `Constants.ExcludedPackages` (otherwise the generator throws `BadImageFormatException`). Do not remove either.
+- The compiler comes from the SDK. An analyzer package newer than the SDK's compiler fails the build with `CS9057`, so keep `Microsoft.CodeAnalysis.CSharp.CodeStyle` at or below the compiler version of the SDK in use (and of the SDK the workflow installs). Do not reference `Microsoft.Net.Compilers.Toolset` to work around it: the generator scans every `PackageReference` and throws `BadImageFormatException` on its native DLLs.
 - Line endings: the repo is CRLF on Windows. Do not rewrite whole files to change endings.
 - `EditorConfigGenerator.xml` (XML doc output) is tracked and changes on every Debug build. Do not commit it unless the diff is intentional.
 
