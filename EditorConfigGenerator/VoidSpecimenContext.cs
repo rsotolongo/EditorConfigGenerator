@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="VoidSpecimenContext.cs" company="RS">
 //     Copyright (c). All rights reserved.
 // </copyright>

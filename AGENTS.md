@@ -17,9 +17,8 @@ It take precedence over the global or profile rules where they conflict (see "Ov
 | `EditorConfigGenerator/Helpers.cs` | Package/DLL discovery, analyzer instantiation (AutoFixture), rule extraction |
 | `EditorConfigGenerator/Constants.cs` | All literals and the rule-ID lists |
 | `EditorConfigGenerator/Rule.cs`, `VoidSpecimenContext.cs` | Rule model, AutoFixture helper |
-| `EditorConfigGenerator/ConfigFiles/` | Companion files shipped to consumers (not generated) |
-| `.editorconfig` (repo root) | The generated rules plus a hand-written head. Also governs this project's own build |
-| `.github/workflows/release.yml` | Build, generate, package, tag, release on every push to `main` |
+| `.editorconfig` (repo root) | The generator's output, copied here manually. Also governs this project's own build |
+| `.github/workflows/release.yml` | Build, generate, tag, release the generated `.editorconfig` on every push to `main` |
 
 ## Commands
 
@@ -30,7 +29,7 @@ cd EditorConfigGenerator/bin/Debug/net10.0 && dotnet EditorConfigGenerator.dll
 
 - Run from `bin/Debug/net10.0`. The project folder is found via `Constants.RelativeWindowsPath` / `RelativeNonWindowsPath` (`../../..`) from the working directory. `dotnet run` from the project folder silently writes an empty `.editorconfig`.
 - Build **Debug**, not Release. `DocumentationFile` is only set for Debug and the doc-file analyzers must pass (the workflow does the same).
-- There are no tests. Verify by building with 0 errors and 0 warnings, running the generator, and checking the output is non-empty (about 10,600 lines) and that its first 73 lines match `OutputFileHeader`.
+- There are no tests. Verify by building with 0 errors and 0 warnings, running the generator, and checking the output is non-empty (about 10,800 lines) and that its first 74 lines match `OutputFileHeader`.
 
 ## Build is strict
 
@@ -45,7 +44,8 @@ Rules that surprise people here:
 - `RCS1208`: prefer early returns over nested `if`.
 - `S3011`/`S3885`: no `BindingFlags.NonPublic`, no `Assembly.LoadFrom` (use `AssemblyLoadContext.Default.LoadFromAssemblyPath`).
 - `S1192`: a literal repeated 3+ times becomes a constant (e.g. `Constants.SectionSeparator`).
-- Public-facing members need XML docs, and every file starts with the copyright header block (company `RS`, from `StyleCop.json`). Match the existing files.
+- Public-facing members need XML docs, and every file starts with the copyright header block (company `RS`). Match the existing files.
+- `SX1412`: files are UTF-8 **without** BOM (the opposite `SA1412` is in `Constants.NoneIds`; the header sets `charset = utf-8`). Visual Studio can re-add a BOM when it saves.
 
 ## The bootstrap trap
 
@@ -53,17 +53,17 @@ The repo-root `.editorconfig` is both generator output and the config this proje
 
 1. `dotnet build -p:RunAnalyzers=false -p:EnforceCodeStyleInBuild=false`
 2. Run the generator from `bin/Debug/net10.0`.
-3. Replace the generated part of the root `.editorconfig` (everything from the first `# Rules from assembly:` line). The first 73 lines are the hand-written head, mirrored by `Constants.OutputFileHeader`; keep the two in sync.
+3. Copy the generated file over the root `.editorconfig` (the file is generator output; do not hand-edit it). The first 74 lines come from `Constants.OutputFileHeader`.
 4. Rebuild normally.
 
-`Constants.OutputFileFooter` (the generated-code section) exists but is not appended to the output yet. It must be last in the file if it ever is.
+`Constants.OutputFileFooter` (the generated-code section and the `*Controller.cs` override) is appended to the output. It must stay last in the file.
 
 ## Conventions
 
 - Rule-ID lists live only in `Constants.cs`. Do not duplicate them in the README or elsewhere.
 - Adding an analyzer or changing a version means editing the `PackageReference` entries in the csproj; the generator discovers packages from there. `Microsoft.Bcl.AsyncInterfaces` is a deliberate runtime reference so analyzer assemblies load. Do not remove it.
 - Analyzer types that cannot be built or whose `SupportedDiagnostics` throws (for example `SonarAnalyzer.ShimLayer` wrappers) are skipped on purpose.
-- Companion files (`ConfigFiles/*`) are copied to the output folder and into the release zip. Their usage is documented in the README; update both together.
+- `Microsoft.Net.Compilers.Toolset` is a deliberate reference that pins the compiler to the CodeStyle analyzer's version; without it an older SDK compiler fails the build with `CS9057`. Keep its version equal to `Microsoft.CodeAnalysis.CSharp.CodeStyle`. It ships native DLLs, so it is skipped by `Constants.ExcludedPackages` (otherwise the generator throws `BadImageFormatException`). Do not remove either.
 - Line endings: the repo is CRLF on Windows. Do not rewrite whole files to change endings.
 - `EditorConfigGenerator.xml` (XML doc output) is tracked and changes on every Debug build. Do not commit it unless the diff is intentional.
 

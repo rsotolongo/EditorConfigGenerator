@@ -109,9 +109,14 @@
             The deprecated title patterns.
             </summary>
         </member>
+        <member name="F:EditorConfigGenerator.Constants.ExcludedPackages">
+            <summary>
+            The packages that ship no analyzers and are skipped during discovery.
+            </summary>
+        </member>
         <member name="F:EditorConfigGenerator.Constants.NoneIds">
             <summary>
-            The identifiers to be ìgnored.
+            The identifiers to be ignored.
             </summary>
         </member>
         <member name="F:EditorConfigGenerator.Constants.RuleHeaderPattern">
@@ -196,6 +201,15 @@
             </summary>
             <param name="type">The type.</param>
             <param name="supportedDiagnosticsProperty">The supported diagnostics property.</param>
+        </member>
+        <member name="M:EditorConfigGenerator.Helpers.GetPackageFiles(System.Xml.Linq.XElement,System.String,System.IO.EnumerationOptions)">
+            <summary>
+            Gets the assembly files of a package reference.
+            </summary>
+            <param name="package">The package reference node.</param>
+            <param name="packagesFolder">The packages folder.</param>
+            <param name="caseInsensitive">The enumeration options.</param>
+            <returns>A list of files; empty for excluded packages.</returns>
         </member>
         <member name="M:EditorConfigGenerator.Helpers.GetFiles(System.String[])">
             <summary>

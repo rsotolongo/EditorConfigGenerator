@@ -53,21 +53,12 @@ jobs:
           fi
           echo "tag=$next" >> "$GITHUB_OUTPUT"
 
-      - name: Package
-        run: |
-          mkdir -p dist/ConfigFiles
-          cp EditorConfigGenerator/bin/Debug/net10.0/.editorconfig dist/.editorconfig
-          cp EditorConfigGenerator/ConfigFiles/*.editorconfig dist/ConfigFiles/
-          cp EditorConfigGenerator/ConfigFiles/StyleCop.json EditorConfigGenerator/ConfigFiles/CodeMetricsConfig.txt dist/ConfigFiles/
-          (cd dist && zip -r "../EditorConfigGenerator-${{ steps.version.outputs.tag }}.zip" .)
-
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "${{ steps.version.outputs.tag }}" \
-            "EditorConfigGenerator-${{ steps.version.outputs.tag }}.zip" \
-            dist/.editorconfig \
+            EditorConfigGenerator/bin/Debug/net10.0/.editorconfig \
             --target "$GITHUB_SHA" \
             --title "${{ steps.version.outputs.tag }}" \
             --generate-notes

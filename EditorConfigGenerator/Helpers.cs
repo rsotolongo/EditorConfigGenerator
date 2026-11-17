@@ -1,10 +1,11 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="Helpers.cs" company="RS">
 //     Copyright (c). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Globalization;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Xml.Linq;
 using AutoFixture;
 using AutoFixture.Kernel;
@@ -102,19 +103,7 @@ internal static class Helpers
                 var caseInsensitive = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
                 foreach (XElement package in projectReference.Descendants(Constants.PackageNodeName))
                 {
-                    XAttribute packageNameAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageNameAttribute);
-                    string packageName = !string.IsNullOrWhiteSpace(packageNameAttribute?.Value)
-                        ? packageNameAttribute.Value.Trim()
-                        : string.Empty;
-                    XAttribute packageVersionAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageVersionAttribute);
-                    string packageVersion = !string.IsNullOrWhiteSpace(packageVersionAttribute?.Value)
-                        ? packageVersionAttribute.Value.Trim()
-                        : string.Empty;
-                    string packageFolder = Directory.EnumerateDirectories(packagesFolder, packageName, caseInsensitive).First();
-                    string folder = Path.Combine(packageFolder, packageVersion);
-                    string[] assemblyFiles = Directory.GetFiles(folder, Constants.AssembliesPattern, SearchOption.AllDirectories);
-                    IList<string> files = GetFiles(assemblyFiles);
-                    result.AddRange(files);
+                    result.AddRange(GetPackageFiles(package, packagesFolder, caseInsensitive));
                 }
             }
         }
@@ -210,6 +199,34 @@ internal static class Helpers
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// Gets the assembly files of a package reference.
+    /// </summary>
+    /// <param name="package">The package reference node.</param>
+    /// <param name="packagesFolder">The packages folder.</param>
+    /// <param name="caseInsensitive">The enumeration options.</param>
+    /// <returns>A list of files; empty for excluded packages.</returns>
+    private static List<string> GetPackageFiles(XElement package, string packagesFolder, EnumerationOptions caseInsensitive)
+    {
+        XAttribute packageNameAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageNameAttribute);
+        string packageName = !string.IsNullOrWhiteSpace(packageNameAttribute?.Value)
+            ? packageNameAttribute.Value.Trim()
+            : string.Empty;
+        string[] assemblyFiles = [];
+        if (!Constants.ExcludedPackages.Contains(packageName, StringComparer.OrdinalIgnoreCase))
+        {
+            XAttribute packageVersionAttribute = package.Attributes().FirstOrDefault(static item => item.Name == Constants.PackageVersionAttribute);
+            string packageVersion = !string.IsNullOrWhiteSpace(packageVersionAttribute?.Value)
+                ? packageVersionAttribute.Value.Trim()
+                : string.Empty;
+            string packageFolder = Directory.EnumerateDirectories(packagesFolder, packageName, caseInsensitive).First();
+            string folder = Path.Combine(packageFolder, packageVersion);
+            assemblyFiles = Directory.GetFiles(folder, Constants.AssembliesPattern, SearchOption.AllDirectories);
+        }
+
+        return GetFiles(assemblyFiles);
     }
 
     /// <summary>

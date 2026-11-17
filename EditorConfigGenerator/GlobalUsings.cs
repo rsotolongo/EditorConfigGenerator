@@ -1,1 +1,1 @@
-﻿global using EditorConfigGenerator;
+global using EditorConfigGenerator;

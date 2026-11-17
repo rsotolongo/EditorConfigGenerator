@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="Constants.cs" company="RS">
 //     Copyright (c). All rights reserved.
 // </copyright>
@@ -117,7 +117,15 @@ internal static class Constants
     ];
 
     /// <summary>
-    /// The identifiers to be ìgnored.
+    /// The packages that ship no analyzers and are skipped during discovery.
+    /// </summary>
+    internal static readonly string[] ExcludedPackages =
+    [
+        "Microsoft.Net.Compilers.Toolset",
+    ];
+
+    /// <summary>
+    /// The identifiers to be ignored.
     /// </summary>
     internal static readonly string[] NoneIds =
     [
@@ -423,6 +431,11 @@ internal static class Constants
         "IDE0211",
         "SA1118",
         "RCS1213",
+        "RCS1223",
+        "S3059",
+        "MA0174",
+        "RCS1231",
+        "RCS1031",
     ];
 
     /// <summary>
@@ -455,6 +468,12 @@ internal static class Constants
         "generated_code = true",
         "dotnet_diagnostic.CS8933.severity = none",
         "dotnet_diagnostic.CS1591.severity = none",
+        string.Empty,
+        SectionSeparator,
+        "# ASP.NET Core only discovers public controllers, so CA1515 cannot be satisfied for them",
+        SectionSeparator,
+        "[**/*Controller.cs]",
+        "dotnet_diagnostic.CA1515.severity = none",
     ];
 
     /// <summary>
@@ -468,6 +487,7 @@ internal static class Constants
         "root = true",
         string.Empty,
         "[*]",
+        "charset = utf-8",
         "indent_size = 2",
         "indent_style = space",
         string.Empty,

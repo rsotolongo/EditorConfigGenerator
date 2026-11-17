@@ -17,6 +17,8 @@ The rules come from the NuGet analyzer packages referenced in [EditorConfigGener
 
 To cover other analyzers, or other versions of these, edit the `PackageReference` entries and rebuild.
 
+The project also references `Microsoft.Net.Compilers.Toolset`. It is not an analyzer package: it pins the compiler to the version the CodeStyle analyzer needs. Without it, an SDK with an older compiler fails the build with `CS9057`. The generator skips it (`Constants.ExcludedPackages`). When you raise `Microsoft.CodeAnalysis.CSharp.CodeStyle`, raise the toolset to the same version.
+
 ## Severity rules
 
 - Every rule is `error` by default.
@@ -28,10 +30,12 @@ All three lists live in [Constants.cs](EditorConfigGenerator/Constants.cs). Edit
 
 ## Output layout
 
-1. `Constants.OutputFileHeader`: general settings and the hand-written style, formatting and naming options.
+1. `Constants.OutputFileHeader`: general settings (`charset = utf-8`, indentation) and the style, formatting and naming options.
 2. One `# Rules from assembly: ...` section per analyzer assembly. Each rule gets a comment with its title and a `dotnet_diagnostic.<ID>.severity` line.
 
-`Constants.OutputFileFooter` defines the closing section for generated code. It is not appended to the output yet.
+3. `Constants.OutputFileFooter`: the closing section, with the generated-code settings and the override for `*Controller.cs` files.
+
+Files are stored as UTF-8 without a byte order mark: the header sets `charset = utf-8`, rule `SX1412` is `error` and its opposite `SA1412` is `none`.
 
 ## Usage
 
@@ -43,46 +47,11 @@ cd EditorConfigGenerator/bin/Debug/net10.0
 dotnet EditorConfigGenerator.dll
 ```
 
-The `.editorconfig` is written to that folder. Copy it into the solution you want to configure. Installing the same analyzers there is recommended, but not required for the built-in rules to appear in the file.
-
-## Companion files
-
-The [ConfigFiles](EditorConfigGenerator/ConfigFiles) folder holds files to copy into the target solution next to the generated `.editorconfig`. The generated file applies to every `*.cs` file. These files relax a few rules for specific kinds of project.
-
-### Per-project `.editorconfig` overrides
-
-Copy the file that matches the project type into that project's folder and name it `.editorconfig`. EditorConfig applies the closest file last, so these override the root file for that project only. Do not set `root = true` in them.
-
-| File | Use in | Rules set to `none` |
-| --- | --- | --- |
-| `app-project.editorconfig` | Each application project (API, worker, console) | `CA2007`; `CS1591` only if the app is not consumed as a library |
-| `web-project.editorconfig` | Each ASP.NET Core web project (controllers must stay public) | `CA2007`, `CA1515`, `CS1591` |
-| `test-project.editorconfig` | Each test project | `CA2007`, `CA1707`, `CA1515`, `CS1591` |
-
-Library projects need no override.
-
-### `CodeMetricsConfig.txt`
-
-Sets the thresholds for the code metrics rules `CA1502` (cyclomatic complexity), `CA1505` (maintainability index) and `CA1506` (class coupling, with separate method and type limits). Copy it to the root of each project that should use these thresholds and register it as an additional file:
-
-```xml
-<ItemGroup>
-  <AdditionalFiles Include="CodeMetricsConfig.txt" />
-</ItemGroup>
-```
-
-The file name must stay exactly `CodeMetricsConfig.txt`, or the analyzer ignores it. Without it, the analyzer uses its default thresholds.
-
-### `StyleCop.json`
-
-Settings for StyleCop.Analyzers. Register it the same way, as `<AdditionalFiles Include="StyleCop.json" />`. This project already does so from `ConfigFiles\StyleCop.json`.
+The `.editorconfig` is written to that folder. Copy it into the solution you want to configure, or over this repository's own root `.editorconfig`. Installing the same analyzers there is recommended, but not required for the built-in rules to appear in the file.
 
 ## Releases
 
-Every push to `main` publishes a GitHub release through [release.yml](.github/workflows/release.yml). Pushes that only change `*.md` files or `.gitignore` do not. The workflow builds the project, runs the generator and attaches two assets:
-
-- `EditorConfigGenerator-vX.Y.Z.zip`: the generated `.editorconfig` plus the [companion files](#companion-files).
-- `.editorconfig`: the generated file alone.
+Every push to `main` publishes a GitHub release through [release.yml](.github/workflows/release.yml). Pushes that only change `*.md` files or `.gitignore` do not. The workflow builds the project, runs the generator and attaches the generated `.editorconfig` as the only release asset.
 
 Release notes are generated from the commits and pull requests since the previous release. Download a release when you only need the config and don't want to build the generator yourself.
 
@@ -92,8 +61,8 @@ Versions follow [Semantic Versioning](https://semver.org) (`vMAJOR.MINOR.PATCH`)
 
 | Commit message contains | Bump | Use for |
 | --- | --- | --- |
-| `#major` | `v1.2.3` → `v2.0.0` | Changes that break consumers, such as a renamed or removed companion file or a different output layout |
-| `#minor` | `v1.2.3` → `v1.3.0` | New analyzers, new companion files, new severity behavior |
+| `#major` | `v1.2.3` → `v2.0.0` | Changes that break consumers, such as a different output layout |
+| `#minor` | `v1.2.3` → `v1.3.0` | New analyzers, new severity behavior |
 | neither | `v1.2.3` → `v1.2.4` | Analyzer package updates, changes to `WarningIds` or `NoneIds`, fixes |
 
 The first release is `v1.0.0`. Every rule is `error` by default, so a new analyzer or a stricter severity can break consumers' builds. Treat those as at least a minor bump.
@@ -102,7 +71,7 @@ The release build runs with `TreatWarningsAsErrors`, so a stale `.editorconfig` 
 
 ## How it works
 
-1. `Helpers.GetFiles` reads the `PackageReference` entries from the project file and collects the DLLs of each package from `~/.nuget/packages`.
+1. `Helpers.GetFiles` reads the `PackageReference` entries from the project file and collects the DLLs of each package from `~/.nuget/packages`, except the packages in `Constants.ExcludedPackages`.
 2. `Parser` loads those assemblies.
 3. `Helpers.GetAssemblyRuleSeverities` instantiates each analyzer type with AutoFixture and reads its `SupportedDiagnostics` to get the rule IDs and titles. Types that cannot be built or whose property throws are skipped.
 4. `Parser` assigns each rule its severity and writes the result.
@@ -111,14 +80,16 @@ Because it reads the packages from the local NuGet cache and uses reflection, th
 
 ## Build notes
 
-The project builds with `TreatWarningsAsErrors` and the generated `.editorConfig` in the repo root. After changing `NoneIds`, `WarningIds` or the header, the repo's `.editorConfig` may be stale and block the build. Build once with `-p:RunAnalyzers=false -p:EnforceCodeStyleInBuild=false`, regenerate the file, then build normally.
+The project builds with `TreatWarningsAsErrors` and the generated `.editorconfig` in the repo root. After changing `NoneIds`, `WarningIds` or the header, the repo's `.editorconfig` may be stale and block the build. Build once with `-p:RunAnalyzers=false -p:EnforceCodeStyleInBuild=false`, run the generator, copy the output over the root `.editorconfig`, then build normally.
+
+If the build fails with `CS9057` ("references version ... of the compiler, which is newer"), the `Microsoft.Net.Compilers.Toolset` version is older than an analyzer package. Raise it to match `Microsoft.CodeAnalysis.CSharp.CodeStyle`.
 
 ## Contributing
 
 Contributions are welcome through pull requests. Nobody except the maintainer can push to `main`, so:
 
 1. Fork the repository and create a branch in your fork.
-2. Make your change. The build must finish with 0 errors and 0 warnings (see [Build notes](#build-notes)).
+2. Make your change. The build must finish with 0 errors and 0 warnings (see [Build notes](#build-notes)). Save files as UTF-8 without a byte order mark, or rule `SX1412` fails the build.
 3. Open a pull request against `main`.
 
 The maintainer reviews and approves every pull request before it is merged. Merging to `main` publishes a new release.
