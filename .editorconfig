@@ -15,7 +15,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 # ---------------------------------------------------------------------------
-# Style options (target: .NET 10 / C# 14)
+# Style options (target: .NET 11 / C# 15)
 # ---------------------------------------------------------------------------
 csharp_style_namespace_declarations = file_scoped:error
 csharp_using_directive_placement = outside_namespace:error

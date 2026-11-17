@@ -490,7 +490,7 @@ internal static class Constants
         "trim_trailing_whitespace = true",
         string.Empty,
         SectionSeparator,
-        "# Style options (target: .NET 10 / C# 14)",
+        "# Style options (target: .NET 11 / C# 15)",
         SectionSeparator,
         "csharp_style_namespace_declarations = file_scoped:error",
         "csharp_using_directive_placement = outside_namespace:error",
